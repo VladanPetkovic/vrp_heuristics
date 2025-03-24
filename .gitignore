@@ -1,2 +1,4 @@
 .idea
-cmake-build-debug
+vrp_solver/cmake-build-debug
+test_data
+vrp_solver/out
