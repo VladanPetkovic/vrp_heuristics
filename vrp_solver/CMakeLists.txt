@@ -3,6 +3,8 @@ project(vrp_solver)
 
 set(CMAKE_CXX_STANDARD 23)
 
+include_directories(include)
+
 add_executable(vrp_solver
         src/main.cpp
         src/graph.cpp

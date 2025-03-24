@@ -1,4 +1,3 @@
-#include <iostream>
 #include "../include/graph.h"
 #include "../include/graph_builder.h"
 
