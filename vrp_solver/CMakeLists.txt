@@ -9,4 +9,5 @@ add_executable(vrp_solver
         src/main.cpp
         src/graph.cpp
         src/graph_builder.cpp
+        src/helper/program_helper.cpp
 )

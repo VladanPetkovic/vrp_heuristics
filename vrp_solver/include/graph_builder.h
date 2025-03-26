@@ -11,7 +11,7 @@
 
 class GraphBuilder {
 public:
-    static void loadGraphFromData(Graph& graph, const std::string& filename);
+    static void loadGraphFromData(Graph &graph, const std::string &filename);
 };
 
 #endif //GRAPHBUILDER_H

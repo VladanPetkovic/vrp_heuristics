@@ -1,11 +1,22 @@
-#include "../include/graph.h"
-#include "../include/graph_builder.h"
+#include "graph.h"
+#include "graph_builder.h"
+#include "helper/program_helper.h"
 
-int main() {
+int main(int argc, char *argv[]) {
     Graph graph;
+    // get options
+    ProgramOptions program_options;
+    ProgramHelper::parseArguments(program_options, argc, argv);
 
-    GraphBuilder::loadGraphFromData(graph, "../../test_data/uchoa_et_al_2014");
-
+    // create graph
+    GraphBuilder::loadGraphFromData(graph, program_options.inputFilePath);
     graph.printGraph();
+
+    // create solution
+
+    // output solution
+
+
+
     return 0;
 }
