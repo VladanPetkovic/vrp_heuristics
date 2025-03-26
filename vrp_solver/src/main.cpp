@@ -1,12 +1,12 @@
-#include "graph.h"
-#include "graph_builder.h"
-#include "helper/program_helper.h"
+#include "models/graph.h"
+#include "app/graph_builder.h"
+#include "helper/command_line_parser.h"
 
 int main(int argc, char *argv[]) {
     Graph graph;
     // get options
-    ProgramOptions program_options;
-    ProgramHelper::parseArguments(program_options, argc, argv);
+    ArgumentOptions program_options;
+    CommandLineParser::parseArguments(program_options, argc, argv);
 
     // create graph
     GraphBuilder::loadGraphFromData(graph, program_options.inputFilePath);
@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
     // create solution
 
     // output solution
-
 
 
     return 0;

@@ -6,8 +6,17 @@ set(CMAKE_CXX_STANDARD 23)
 include_directories(include)
 
 add_executable(vrp_solver
+        # main
         src/main.cpp
-        src/graph.cpp
-        src/graph_builder.cpp
-        src/helper/program_helper.cpp
+        # app
+        src/app/graph_builder.cpp
+        # models
+        src/models/graph.cpp
+        src/models/node.cpp
+        src/models/vehicle.cpp
+        # helper
+        src/helper/command_line_parser.cpp
+        src/helper/time_helper.cpp
+        # lib
+        src/lib/pugixml.cpp
 )

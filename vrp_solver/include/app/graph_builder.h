@@ -5,9 +5,10 @@
 #ifndef GRAPHBUILDER_H
 #define GRAPHBUILDER_H
 
-#include "graph.h"
+#include "models/graph.h"
+#include "lib/pugixml.hpp"
 #include <string>
-#include <fstream>
+#include <cstdint>
 
 class GraphBuilder {
 public:

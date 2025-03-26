@@ -9,17 +9,20 @@
 #include <unordered_map>
 #include <string>
 #include <iostream>
+#include <models/node.h>
 
 class Graph {
 public:
-    void addNode(int id, const std::string &label);
+    void addNode(int id, const Node &node);
+
+    Node *getNode(int id);
 
     void addEdge(int from, int to);
 
     void printGraph() const;
 
 private:
-    std::unordered_map<int, std::string> nodes;
+    std::unordered_map<int, Node> nodes; // TODO save as pointer
     std::vector<std::pair<int, int> > edges;
 };
 

@@ -2,9 +2,9 @@
 // Created by petkovic on 26.03.25.
 //
 
-#include "helper/program_helper.h"
+#include "helper/command_line_parser.h"
 
-void ProgramHelper::parseArguments(ProgramOptions &programOptions, const int argc, char *argv[]) {
+void CommandLineParser::parseArguments(ArgumentOptions &programOptions, const int argc, char *argv[]) {
     int opt;
     bool hasInput = false, hasOutput = false;
 
@@ -29,7 +29,7 @@ void ProgramHelper::parseArguments(ProgramOptions &programOptions, const int arg
     }
 }
 
-void ProgramHelper::printUsageAndExit() {
+void CommandLineParser::printUsageAndExit() {
     std::cerr << "Usage: ./vrp_solver "
                  "\n\t\t-i <input_file_path> "
                  "\n\t\t-o <output_file_path>\n";

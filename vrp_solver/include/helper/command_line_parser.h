@@ -9,17 +9,17 @@
 #include <getopt.h>
 #include <string>
 
-struct ProgramOptions {
+struct ArgumentOptions {
     std::string inputFilePath;
     std::string outputFilePath;
 };
 
-class ProgramHelper {
+class CommandLineParser {
 public:
-    static void parseArguments(ProgramOptions &programOptions, int argc, char* argv[]);
+    static void parseArguments(ArgumentOptions &programOptions, int argc, char* argv[]);
 
 private:
-    static void printUsageAndExit() const;
+    static void printUsageAndExit();
 };
 
 #endif //PROGRAM_HELPER_H
