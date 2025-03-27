@@ -36,4 +36,6 @@ void GraphBuilder::loadGraphFromData(Graph &graph, const std::string &file_path)
         Node* existingNode = graph.getNode(node_id);
         existingNode->setQuantity(quantity);
     }
+
+    graph.computeDistances();
 }

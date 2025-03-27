@@ -10,9 +10,11 @@ add_executable(vrp_solver
         src/main.cpp
         # app
         src/app/graph_builder.cpp
+        src/app/solver.cpp
         # models
         src/models/graph.cpp
         src/models/node.cpp
+        src/models/route.cpp
         src/models/vehicle.cpp
         # helper
         src/helper/command_line_parser.cpp
