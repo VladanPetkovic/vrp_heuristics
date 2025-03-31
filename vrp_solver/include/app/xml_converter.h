@@ -2,18 +2,22 @@
 // Created by petkovic on 24.03.25.
 //
 
-#ifndef GRAPHBUILDER_H
-#define GRAPHBUILDER_H
+#ifndef XML_CONVERTER_H
+#define XML_CONVERTER_H
 
 #include <models/graph.h>
+#include <list>
 #include <lib/pugixml.hpp>
 #include <string>
 #include <cstdint>
+#include <models/route.h>
 #include <models/vehicle.h>
 
-class GraphBuilder {
+class XMLConverter {
 public:
     static void loadGraphFromData(Graph &graph, Vehicle &vehicle, const std::string &filename);
+
+    static bool saveSolutionToFile(std::list<Route *> *routes, Graph &graph, const std::string &filename);
 };
 
-#endif //GRAPHBUILDER_H
+#endif //XML_CONVERTER_H

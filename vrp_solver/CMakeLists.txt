@@ -9,7 +9,7 @@ add_executable(vrp_solver
         # main
         src/main.cpp
         # app
-        src/app/graph_builder.cpp
+        src/app/xml_converter.cpp
         src/app/solver.cpp
         # models
         src/models/graph.cpp

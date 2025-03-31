@@ -7,7 +7,11 @@
 
 #include <iostream>
 #include <cstdint>
-#include <models/node.h>
+
+struct RouteNode {
+    uint16_t id;
+    RouteNode *next;
+};
 
 class Route {
 public:
@@ -16,13 +20,15 @@ public:
 
     virtual ~Route();
 
-    void addNode(Node *node);
+    void addNode(uint16_t id);
 
     void printRoute() const;
 
+    RouteNode *getHead() const;
+
 private:
-    Node *head;
-    Node *tail;
+    RouteNode *head;
+    RouteNode *tail;
 };
 
 

@@ -5,23 +5,34 @@
 #include <models/route.h>
 
 Route::~Route() {
-    // dtor
+    RouteNode *current = head;
+    while (current) {
+        RouteNode *temp = current;
+        current = current->next;
+        delete temp;
+    }
+    head = tail = nullptr;
 }
 
-void Route::addNode(Node *node) {
+void Route::addNode(uint16_t id) {
+    auto *newNode = new RouteNode{id, nullptr};
     if (!head) {
-        head = tail = node;
+        head = tail = newNode;
     } else {
-        tail->setNext(node);
-        tail = node;
+        tail->next = newNode;
+        tail = newNode;
     }
 }
 
 void Route::printRoute() const {
-    Node *current = head;
+    RouteNode *current = head;
     while (current) {
-        std::cout << current->getId() << " -> ";
-        current = current->getNext();
+        std::cout << current->id << " -> ";
+        current = current->next;
     }
     std::cout << "End\n";
+}
+
+RouteNode *Route::getHead() const {
+    return head;
 }

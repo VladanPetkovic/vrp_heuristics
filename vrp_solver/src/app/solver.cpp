@@ -17,12 +17,11 @@ void Solver::nearestNeighbor() {
     std::vector<bool> visited(num_of_nodes, false);
     visited[start_node_id] = true;
     bool every_node_visited = false;
-    Node *start_node = graph.getNode(start_node_id);
 
     while (!every_node_visited) {
         auto *route = new Route(); // TODO: change this.routes to an stack-array
         uint16_t current_node_id = start_node_id;
-        route->addNode(start_node); // always start with depot
+        route->addNode(start_node_id); // always start with depot
 
         uint16_t current_capacity = 0;
         bool route_completed = false;
@@ -41,17 +40,16 @@ void Solver::nearestNeighbor() {
                 }
             }
 
-            Node *nearest_node = graph.getNode(nearest_node_id);
-            uint16_t new_capacity = current_capacity + nearest_node->getQuantity();
+            uint16_t new_capacity = current_capacity + graph.getNode(nearest_node_id)->getQuantity();
 
             // we went back to the depot OR currentCapacity is too high
             if (nearest_node_id == start_node_id || vehicle.exceedsCapacity(new_capacity)) {
-                route->addNode(start_node);
+                route->addNode(start_node_id);
                 routes.push_back(route);
                 route_completed = true;
             } else if (!vehicle.exceedsCapacity(new_capacity)) {
                 // we picked another customer
-                route->addNode(nearest_node);
+                route->addNode(nearest_node_id);
                 visited[nearest_node_id] = true;
                 current_node_id = nearest_node_id;
                 current_capacity = new_capacity;
@@ -74,4 +72,8 @@ void Solver::printRoutes() const {
         std::cout << "Route for vehicle " << i++ << ": ";
         route->printRoute();
     }
+}
+
+std::list<Route *> *Solver::getRoutes() {
+    return &routes;
 }

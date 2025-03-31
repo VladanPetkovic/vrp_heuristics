@@ -24,6 +24,8 @@ public:
 
     void printRoutes() const;
 
+    std::list<Route *>* getRoutes();
+
 private:
     Graph &graph;
     Vehicle &vehicle;
