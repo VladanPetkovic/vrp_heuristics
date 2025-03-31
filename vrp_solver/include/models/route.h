@@ -6,11 +6,8 @@
 #define ROUTE_H
 
 #include <iostream>
-
-struct RouteNode {
-    u_int16_t id;
-    RouteNode *next;
-};
+#include <cstdint>
+#include <models/node.h>
 
 class Route {
 public:
@@ -19,13 +16,13 @@ public:
 
     virtual ~Route();
 
-    void addNode(u_int16_t id);
+    void addNode(Node *node);
 
     void printRoute() const;
 
 private:
-    RouteNode *head;
-    RouteNode *tail;
+    Node *head;
+    Node *tail;
 };
 
 

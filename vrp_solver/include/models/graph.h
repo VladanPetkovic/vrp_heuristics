@@ -16,24 +16,24 @@
 
 class Graph {
 public:
-    void addNode(u_int16_t id, const Node &node);
+    void addNode(uint16_t id, const Node &node);
 
-    Node *getNode(u_int16_t id);
+    Node *getNode(uint16_t id);
 
-    u_int16_t getNumNodes() const;
+    uint16_t getNumNodes() const;
 
     void computeDistances();
 
-    double getDistance(u_int16_t from, uint16_t to) const;
+    double getDistance(uint16_t from, uint16_t to) const;
 
     // void addEdge(int from, int to);
 
     void printGraph() const;
 
 private:
-    std::unordered_map<u_int16_t, Node> nodes; // TODO save as pointer
+    std::unordered_map<uint16_t, Node> nodes; // TODO save as pointer
     // std::vector<std::pair<int, int> > edges;
-    std::unordered_map<u_int16_t, std::unordered_map<u_int16_t, double> > distanceMatrix;
+    std::unordered_map<uint16_t, std::unordered_map<uint16_t, double> > distanceMatrix;
 };
 
 #endif //GRAPH_H

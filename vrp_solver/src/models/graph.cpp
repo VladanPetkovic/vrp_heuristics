@@ -2,14 +2,14 @@
 // Created by petkovic on 24.03.25.
 //
 
-#include "models/graph.h"
+#include <models/graph.h>
 
 
-void Graph::addNode(u_int16_t id, const Node &node) {
+void Graph::addNode(uint16_t id, const Node &node) {
     nodes[id] = node;
 }
 
-Node *Graph::getNode(u_int16_t id) {
+Node *Graph::getNode(uint16_t id) {
     return &nodes.at(id);
 }
 
@@ -17,7 +17,7 @@ Node *Graph::getNode(u_int16_t id) {
 //     edges.emplace_back(from, to);
 // }
 
-u_int16_t Graph::getNumNodes() const {
+uint16_t Graph::getNumNodes() const {
     return nodes.size();
 }
 
@@ -53,8 +53,8 @@ double Graph::getDistance(const uint16_t from, const uint16_t to) const {
 void Graph::computeDistances() {
     for (const auto &node1: nodes) {
         for (const auto &node2: nodes) {
-            u_int16_t id1 = node1.first;
-            u_int16_t id2 = node2.first;
+            uint16_t id1 = node1.first;
+            uint16_t id2 = node2.first;
             if (id1 < id2) {
                 double dist = std::sqrt(
                     std::pow(node1.second.getX() - node2.second.getX(), 2) +

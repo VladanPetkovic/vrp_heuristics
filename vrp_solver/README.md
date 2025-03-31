@@ -12,3 +12,17 @@ cmake ..          # creating the Makefile
 make              # building with MakeFile
 ./vrp_solver      # to run the solver
 ```
+
+### Memory-check with valgrind
+
+Install valgrind:
+
+```shell
+sudo apt install valgrind
+```
+
+run the memory check (program arguments)
+
+```shell
+valgrind --leak-check=full ./vrp_solver
+```

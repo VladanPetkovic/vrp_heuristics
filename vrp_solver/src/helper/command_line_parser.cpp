@@ -2,7 +2,7 @@
 // Created by petkovic on 26.03.25.
 //
 
-#include "helper/command_line_parser.h"
+#include <helper/command_line_parser.h>
 
 void CommandLineParser::parseArguments(ArgumentOptions &programOptions, const int argc, char *argv[]) {
     int opt;

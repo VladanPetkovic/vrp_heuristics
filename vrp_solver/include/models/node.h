@@ -9,7 +9,7 @@
 
 class Node {
 public:
-    Node() : x_position(0), y_position(0), quantity(0), id(0), type(0) {
+    Node() : x_position(0), y_position(0), quantity(0), id(0), type(0), next(nullptr) {
     }
 
     Node(uint16_t x, uint16_t y, uint16_t id, uint8_t type);
@@ -26,15 +26,20 @@ public:
 
     uint8_t getType() const;
 
+    Node *getNext() const;
+
+    void setNext(Node *node);
+
     void setQuantity(uint8_t quantity);
 
 private:
-    // TODO: thing about struct Position
+    // TODO: struct Position
     uint16_t x_position;
     uint16_t y_position;
     uint8_t quantity;
     uint16_t id;
     uint8_t type;
+    Node *next;
 };
 
 

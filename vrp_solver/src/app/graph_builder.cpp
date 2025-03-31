@@ -6,7 +6,7 @@
 
 #include <models/node.h>
 
-void GraphBuilder::loadGraphFromData(Graph &graph, const std::string &file_path) {
+void GraphBuilder::loadGraphFromData(Graph &graph, Vehicle &vehicle, const std::string &file_path) {
     pugi::xml_document doc;
     if (!doc.load_file(file_path.c_str())) {
         std::cerr << "Failed to load XML file!" << std::endl;
@@ -27,13 +27,20 @@ void GraphBuilder::loadGraphFromData(Graph &graph, const std::string &file_path)
         graph.addNode(id, newNode);
     }
     // vehicle-profile
-    pugi::xml_node fleet = instance.child("fleet");
+    pugi::xml_node vehicleProfile = instance.child("fleet").child("vehicle_profile");
+    uint16_t capacity = vehicleProfile.child("capacity").text().as_int();
+    uint16_t departure_node_id = vehicleProfile.child("departure_node").text().as_int();
+    uint16_t arrival_node_id = vehicleProfile.child("arrival_node").text().as_int();
+    vehicle.setCapacity(capacity);
+    vehicle.setDepartureNode(graph.getNode(departure_node_id));
+    vehicle.setArrivalNode(graph.getNode(arrival_node_id));
+
     // requests
     pugi::xml_node requests = instance.child("requests");
     for (pugi::xml_node request: requests.children("request")) {
         uint8_t quantity = request.child("quantity").text().as_int();
         uint16_t node_id = request.attribute("node").as_int();
-        Node* existingNode = graph.getNode(node_id);
+        Node *existingNode = graph.getNode(node_id);
         existingNode->setQuantity(quantity);
     }
 

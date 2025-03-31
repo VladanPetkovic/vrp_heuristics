@@ -5,21 +5,29 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
-#include "models/graph.h"
-#include "models/route.h"
+#include <list>
+#include <models/vehicle.h>
+
+#include <models/graph.h>
+#include <models/route.h>
 
 class Solver {
 public:
-    explicit Solver(Graph &graph) : graph(graph) {
+    Solver(Graph &graph, Vehicle &vehicle) : graph(graph), vehicle(vehicle) {
     }
 
-    void nearestNeighbor(u_int16_t startNodeId);
+    // "using virtual for a correct destructor-chain"
+    // at first, the child is called, then the parent is called when using virtual
+    virtual ~Solver();
+
+    void nearestNeighbor();
 
     void printRoutes() const;
 
 private:
     Graph &graph;
-    std::vector<Route> routes;
+    Vehicle &vehicle;
+    std::list<Route *> routes;
 };
 
 

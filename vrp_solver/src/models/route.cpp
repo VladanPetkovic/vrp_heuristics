@@ -2,33 +2,26 @@
 // Created by petkovic on 27.03.25.
 //
 
-#include "models/route.h"
+#include <models/route.h>
 
 Route::~Route() {
-    RouteNode *current = head;
-    while (current) {
-        RouteNode *temp = current;
-        current = current->next;
-        delete temp;
-    }
-    head = tail = nullptr;
+    // dtor
 }
 
-void Route::addNode(u_int16_t id) {
-    auto *newNode = new RouteNode{id, nullptr};
+void Route::addNode(Node *node) {
     if (!head) {
-        head = tail = newNode;
+        head = tail = node;
     } else {
-        tail->next = newNode;
-        tail = newNode;
+        tail->setNext(node);
+        tail = node;
     }
 }
 
 void Route::printRoute() const {
-    RouteNode *current = head;
+    Node *current = head;
     while (current) {
-        std::cout << current->id << " -> ";
-        current = current->next;
+        std::cout << current->getId() << " -> ";
+        current = current->getNext();
     }
     std::cout << "End\n";
 }
