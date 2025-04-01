@@ -32,14 +32,6 @@ uint8_t Node::getType() const {
     return type;
 }
 
-Node *Node::getNext() const {
-    return next;
-}
-
-void Node::setNext(Node *node) {
-    next = node;
-}
-
 void Node::setQuantity(const uint8_t quantity) {
     this->quantity = quantity;
 }

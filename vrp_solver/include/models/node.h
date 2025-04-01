@@ -9,7 +9,7 @@
 
 class Node {
 public:
-    Node() : x_position(0), y_position(0), quantity(0), id(0), type(0), next(nullptr) {
+    Node() : x_position(0), y_position(0), quantity(0), id(0), type(0) {
     }
 
     Node(uint16_t x, uint16_t y, uint16_t id, uint8_t type);
@@ -26,10 +26,6 @@ public:
 
     uint8_t getType() const;
 
-    Node *getNext() const;
-
-    void setNext(Node *node);
-
     void setQuantity(uint8_t quantity);
 
 private:
@@ -39,7 +35,6 @@ private:
     uint8_t quantity;
     uint16_t id;
     uint8_t type;
-    Node *next;
 };
 
 

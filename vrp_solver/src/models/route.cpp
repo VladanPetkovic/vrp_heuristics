@@ -4,35 +4,30 @@
 
 #include <models/route.h>
 
-Route::~Route() {
-    RouteNode *current = head;
-    while (current) {
-        RouteNode *temp = current;
-        current = current->next;
-        delete temp;
-    }
-    head = tail = nullptr;
+Route::Route() {
+    // ctor
+    nodes.fill(-1); // setting all nodes to default
 }
 
-void Route::addNode(uint16_t id) {
-    auto *newNode = new RouteNode{id, nullptr};
-    if (!head) {
-        head = tail = newNode;
+Route::~Route() {
+    // dtor
+}
+
+void Route::addNode(const uint16_t id) {
+    if (size < MAX_COUNT_NODES_PER_ROUTE) {
+        nodes[size++] = id;
     } else {
-        tail->next = newNode;
-        tail = newNode;
+        std::cerr << "Route is full! Cannot add more nodes.\n";
     }
 }
 
 void Route::printRoute() const {
-    RouteNode *current = head;
-    while (current) {
-        std::cout << current->id << " -> ";
-        current = current->next;
+    for (uint16_t i = 0; i < size; i++) {
+        std::cout << nodes[i] << " ";
     }
     std::cout << "End\n";
 }
 
-RouteNode *Route::getHead() const {
-    return head;
+std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> Route::getNodes() const {
+    return nodes;
 }

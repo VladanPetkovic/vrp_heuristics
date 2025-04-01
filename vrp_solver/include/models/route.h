@@ -5,18 +5,13 @@
 #ifndef ROUTE_H
 #define ROUTE_H
 
+#include <array>
 #include <iostream>
 #include <cstdint>
 
-struct RouteNode {
-    uint16_t id;
-    RouteNode *next;
-};
-
 class Route {
 public:
-    Route() : head(nullptr), tail(nullptr) {
-    }
+    Route();
 
     virtual ~Route();
 
@@ -24,11 +19,13 @@ public:
 
     void printRoute() const;
 
-    RouteNode *getHead() const;
+    static constexpr uint8_t MAX_COUNT_NODES_PER_ROUTE = 20;
+
+    std::array<short, 20> getNodes() const;
 
 private:
-    RouteNode *head;
-    RouteNode *tail;
+    std::array<short, MAX_COUNT_NODES_PER_ROUTE> nodes;
+    uint8_t size = 0; // track number of nodes added
 };
 
 

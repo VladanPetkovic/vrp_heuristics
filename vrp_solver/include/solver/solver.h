@@ -20,16 +20,16 @@ public:
     // at first, the child is called, then the parent is called when using virtual
     virtual ~Solver();
 
-    void nearestNeighbor();
+    virtual void solve() = 0;
 
-    void printRoutes() const;
+    virtual void printRoutes() const;
 
-    std::list<Route *>* getRoutes();
+    std::list<Route> &getRoutes();
 
-private:
+protected:
     Graph &graph;
     Vehicle &vehicle;
-    std::list<Route *> routes;
+    std::list<Route> routes;
 };
 
 

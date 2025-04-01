@@ -2,9 +2,7 @@
 // Created by petkovic on 24.03.25.
 //
 
-#include "app/xml_converter.h"
-
-#include <models/node.h>
+#include <helper/xml_converter.h>
 
 void XMLConverter::loadGraphFromData(Graph &graph, Vehicle &vehicle, const std::string &file_path) {
     pugi::xml_document doc;
@@ -47,31 +45,31 @@ void XMLConverter::loadGraphFromData(Graph &graph, Vehicle &vehicle, const std::
     graph.computeDistances();
 }
 
-bool XMLConverter::saveSolutionToFile(std::list<Route *> *routes, Graph &graph, const std::string &filename) {
+bool XMLConverter::saveSolutionToFile(std::list<Route> &routes, Graph &graph, const std::string &filename) {
     pugi::xml_document doc;
     pugi::xml_node routes_node = doc.append_child("routes");
 
-    for (auto route: *routes) {
+    for (auto &route: routes) {
         pugi::xml_node route_node = routes_node.append_child("route");
         pugi::xml_node nodes_node = route_node.append_child("nodes");
 
-        RouteNode *current_node = route->getHead();
-        while (current_node) {
-            Node *data_node = graph.getNode(current_node->id);
+        auto node_ids = route.getNodes();
+        uint8_t count = 0;
+        while (node_ids[count] != -1) {
+            Node *data_node = graph.getNode(node_ids[count]);
             pugi::xml_node node_node = nodes_node.append_child("node");
 
             node_node.append_child("x").text() = data_node->getX();
             node_node.append_child("y").text() = data_node->getY();
             node_node.append_child("quantity").text() = data_node->getQuantity();
-            node_node.append_child("id").text() = data_node->getId();
+            node_node.append_attribute("id") = data_node->getId();
 
-            if (current_node->next) {
-                node_node.append_child("next_node_id").text() = current_node->next->id;
+            if (count < node_ids.size() - 1 && node_ids[count + 1] != -1) {
+                node_node.append_attribute("next_node_id") = node_ids[count + 1]; // neighbor node
             } else {
-                node_node.append_child("next_node_id").text() = -1;
+                node_node.append_attribute("next_node_id") = -1; // returned to depot
             }
-
-            current_node = current_node->next;
+            count++;
         }
     }
 
