@@ -1,13 +1,14 @@
 # root
 .idea
+test_data
+solution
+visualization
 
 # vrp_solver
 vrp_solver/.idea
 vrp_solver/cmake-build-debug
-vrp_solver/test_data
 vrp_solver/out
 
 # data_analysis
 data_analysis/.idea
-data_analysis/test_data
 data_analysis/out

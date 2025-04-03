@@ -32,17 +32,13 @@ void Graph::printGraph() const {
 }
 
 double Graph::getDistance(const uint16_t from, const uint16_t to) const {
-    if (distanceMatrix.contains(from)) {
-        if (distanceMatrix.at(from).contains(to)) {
-            return distanceMatrix.at(from).at(to);
-        }
-    } else {
-        if (distanceMatrix.at(to).contains(from)) {
-            // saving only one direction, but both can be passed
-            return distanceMatrix.at(to).at(from);
-        }
+    uint16_t newFrom = to;
+    uint16_t newTo = from;
+    if (from > to) {
+        return distanceMatrix.at(newFrom).at(newTo);
     }
-    return std::numeric_limits<double>::max();
+
+    return distanceMatrix.at(from).at(to);
 }
 
 /**

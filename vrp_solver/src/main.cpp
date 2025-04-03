@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Function Execution Time: " << duration.count() << " microseconds\n";
 
     // output solution
-    solver->printRoutes();
+    // solver->printRoutes();
     bool properlySaved = XMLConverter::saveSolutionToFile(solver->getRoutes(), graph, program_options.outputFilePath);
 
     return properlySaved ? EXIT_SUCCESS : EXIT_FAILURE;

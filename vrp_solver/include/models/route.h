@@ -19,9 +19,9 @@ public:
 
     void printRoute() const;
 
-    static constexpr uint8_t MAX_COUNT_NODES_PER_ROUTE = 20;
+    static constexpr uint8_t MAX_COUNT_NODES_PER_ROUTE = 50;
 
-    std::array<short, 20> getNodes() const;
+    std::array<short, MAX_COUNT_NODES_PER_ROUTE> getNodes() const;
 
 private:
     std::array<short, MAX_COUNT_NODES_PER_ROUTE> nodes;
