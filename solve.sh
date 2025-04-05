@@ -7,7 +7,7 @@ dir_solution="solution"
 
 ##########################
 # algorithms
-algorithms=('nearest_neighbor') # add additional separating with space
+algorithms=('nearest_neighbor' 'savings_clark_wright') # add additional separating with space
 
 
 ##########################
@@ -25,7 +25,7 @@ for dir in "$dir_augerat" "$dir_christofides" "$dir_uchoa"; do
             output_file="../$dir_solution/$algorithm/$file"
             echo "Saving to: $output_file"
 
-            ../vrp_solver/out/vrp_solver -i "$file" -o "$output_file"
+            ../vrp_solver/out/vrp_solver -i "$file" -o "$output_file" -a "$algorithm"
         done
     done
 done

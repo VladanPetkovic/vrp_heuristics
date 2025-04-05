@@ -17,8 +17,7 @@ int main(int argc, char *argv[]) {
     XMLConverter::loadGraphFromData(graph, vehicle, program_options.inputFilePath);
 
     // create solution
-    std::string algorithm = "nearest"; // program_options.algorithm;
-    std::unique_ptr<Solver> solver = SolverHelper::createSolver(graph, vehicle, algorithm);
+    std::unique_ptr<Solver> solver = SolverHelper::createSolver(graph, vehicle, program_options.algorithm);
 
     auto start = std::chrono::high_resolution_clock::now();
     solver->solve();
@@ -27,7 +26,6 @@ int main(int argc, char *argv[]) {
     std::cout << "Function Execution Time: " << duration.count() << " microseconds\n";
 
     // output solution
-    // solver->printRoutes();
     bool properlySaved = XMLConverter::saveSolutionToFile(solver->getRoutes(), graph, program_options.outputFilePath);
 
     return properlySaved ? EXIT_SUCCESS : EXIT_FAILURE;

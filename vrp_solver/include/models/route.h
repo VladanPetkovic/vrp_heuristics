@@ -7,6 +7,7 @@
 
 #include <array>
 #include <iostream>
+#include <models/graph.h>
 #include <cstdint>
 
 class Route {
@@ -18,6 +19,18 @@ public:
     void addNode(uint16_t id);
 
     void printRoute() const;
+
+    uint16_t getTotalQuantity(Graph &graph) const;
+
+    bool hasNode(uint16_t id) const;
+
+    bool startsWith(uint16_t id) const;
+
+    bool endsWith(uint16_t id) const;
+
+    void removeFirst();
+
+    void removeLast();
 
     static constexpr uint8_t MAX_COUNT_NODES_PER_ROUTE = 50;
 

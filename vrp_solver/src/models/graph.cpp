@@ -32,6 +32,10 @@ void Graph::printGraph() const {
 }
 
 double Graph::getDistance(const uint16_t from, const uint16_t to) const {
+    if (from == to) {
+        return 0.0;
+    }
+
     uint16_t newFrom = to;
     uint16_t newTo = from;
     if (from > to) {

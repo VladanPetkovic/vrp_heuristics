@@ -55,7 +55,7 @@ def plot_nodes_with_routes(nodes, vehicle_profile, output_file_path, solution_ro
             node2 = route[i + 1]
 
             plt.plot([node1.x, node2.x], [node1.y, node2.y], color=route_color,
-                     linestyle='-', linewidth=0.5, label=f'Route {idx + 1}')
+                     linestyle='-', linewidth=0.5)
 
     plt.xlabel('X Coordinate')
     plt.ylabel('Y Coordinate')
@@ -65,8 +65,6 @@ def plot_nodes_with_routes(nodes, vehicle_profile, output_file_path, solution_ro
     second_desc = 'X...depot\n●...requests'
     plt.figtext(0.15, 0.95, description, wrap=True, ha='center', fontsize=10, va='center')
     plt.figtext(0.9, 0.95, second_desc, wrap=True, ha='center', fontsize=10, va='center')
-
-    # plt.legend(loc='upper right', fontsize=10)
 
     plt.savefig(output_file_path)
 

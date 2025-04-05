@@ -4,9 +4,12 @@
 
 #include <helper/solver_helper.h>
 
-std::unique_ptr<Solver> SolverHelper::createSolver(Graph &graph, Vehicle &vehicle, const std::string &algorithm) {
-    if (algorithm == "nearest") {
-        return std::make_unique<NearestNeighbor>(graph, vehicle);
+std::unique_ptr<Solver> SolverHelper::createSolver(Graph &graph, Vehicle &vehicle, const AlgorithmType algorithmType) {
+    switch (algorithmType) {
+        case AlgorithmType::NearestNeighbor:
+            return std::make_unique<NearestNeighbor>(graph, vehicle);
+        case AlgorithmType::SavingsClarkWright:
+            return std::make_unique<SavingsClarkWright>(graph, vehicle);
     }
-    throw std::invalid_argument("Unknown algorithm: " + algorithm);
+    throw std::invalid_argument("Unknown algorithm");
 }

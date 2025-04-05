@@ -9,11 +9,13 @@
 #include <models/graph.h>
 #include <solver/solver.h>
 #include <solver/nearest_neighbor.h>
+#include <helper/command_line_parser.h>
+#include <solver/savings_clark_wright.h>
 #include <memory>    // using smart pointers
 
 class SolverHelper {
 public:
-    static std::unique_ptr<Solver> createSolver(Graph &graph, Vehicle &vehicle, const std::string &algorithm);
+    static std::unique_ptr<Solver> createSolver(Graph &graph, Vehicle &vehicle, const AlgorithmType algorithmType);
 };
 
 

@@ -8,7 +8,7 @@ void NearestNeighbor::solve() {
     uint16_t start_node_id = vehicle.getDepartureNode().getId();
     uint16_t num_of_nodes = graph.getNumNodes();
     std::vector<bool> visited(num_of_nodes, false);
-    visited[start_node_id] = true;
+    visited[start_node_id - 1] = true;
 
     while (!allNodesVisited(visited)) {
         routes.push_back(buildRoute(start_node_id, visited));
@@ -39,7 +39,7 @@ Route NearestNeighbor::buildRoute(uint16_t start_node_id, std::vector<bool> &vis
 
         // we picked another customer
         route.addNode(nearest_node_id);
-        visited[nearest_node_id] = true;
+        visited[nearest_node_id - 1] = true;
         current_node_id = nearest_node_id;
         current_capacity = new_capacity;
     }
@@ -49,8 +49,8 @@ uint16_t NearestNeighbor::findNearestNode(uint16_t current_node_id, const std::v
     uint16_t nearest_node_id = vehicle.getDepartureNode().getId(); // always return to depot, if nothing found
     double min_distance = std::numeric_limits<double>::max();
 
-    for (uint16_t neighbour_id = 1; neighbour_id < graph.getNumNodes(); ++neighbour_id) {
-        if (!visited[neighbour_id]) {
+    for (uint16_t neighbour_id = 1; neighbour_id <= graph.getNumNodes(); ++neighbour_id) {
+        if (!visited[neighbour_id - 1]) {
             double distance = graph.getDistance(current_node_id, neighbour_id);
             if (distance < min_distance) {
                 min_distance = distance;
@@ -62,7 +62,7 @@ uint16_t NearestNeighbor::findNearestNode(uint16_t current_node_id, const std::v
 }
 
 bool NearestNeighbor::allNodesVisited(const std::vector<bool> &visited) {
-    for (uint16_t i = 1; i < visited.size(); ++i) {
+    for (uint16_t i = 0; i < visited.size(); ++i) {
         if (!visited[i]) {
             return false;
         }
