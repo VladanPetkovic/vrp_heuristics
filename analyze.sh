@@ -3,7 +3,7 @@
 dir_augerat="augerat_1995_set_a"
 dir_christofides="christofides_et_al_1979_cmt"
 dir_uchoa="uchoa_et_al_2014"
-dir_visualization="visualization"
+dir_analysis="analysis"
 dir_solution="solution"
 
 ##########################
@@ -14,11 +14,11 @@ algorithms=('nearest_neighbor' 'savings_clark_wright') # add additional separati
 ##########################
 
 cd "test_data"
-# run visualization for all data
+# run analysis for all data
 for dir in "$dir_augerat" "$dir_christofides" "$dir_uchoa"; do
     for algorithm in "${algorithms[@]}"; do
         # create subdirectory for algorithm and data set
-        mkdir -p "../$dir_visualization/$algorithm/$dir"
+        mkdir -p "../$dir_analysis/$algorithm/$dir"
         dir_temp_solution="../$dir_solution/$algorithm/$dir"
 
         for file in "$dir"/*.xml; do
@@ -27,12 +27,13 @@ for dir in "$dir_augerat" "$dir_christofides" "$dir_uchoa"; do
             filename=$(basename -- "$file")
             filename_no_ext="${filename%.xml}"
 
-            output_file="../$dir_visualization/$algorithm/$dir/$filename_no_ext.png"
+            # TODO: change
+            output_file="../$dir_analysis/$algorithm/$dir/$filename_no_ext.png"
             solution_file="$dir_temp_solution/$filename"
             echo "Saving to: $output_file"
 
-            /usr/bin/python3.10 ../data_analysis/main_visualize.py "$file" "$output_file" --solution_file "$solution_file"
-            echo /usr/bin/python3.10 ../data_analysis/main_visualize.py "$file" "$output_file" --solution_file "$solution_file"
+            /usr/bin/python3.10 ../data_analysis/main_analyze.py "$file" "$output_file" --solution_file "$solution_file"
+            echo /usr/bin/python3.10 ../data_analysis/main_main_analyze.py "$file" "$output_file" --solution_file "$solution_file"
         done
     done
 done
