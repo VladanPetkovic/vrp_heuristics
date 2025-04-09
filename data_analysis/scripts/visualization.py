@@ -50,7 +50,7 @@ def plot_nodes_with_routes(nodes, vehicle_profile, output_file_path, solution_ro
         route_color = route_colors[idx % len(route_colors)]
         if idx > 6:
             break
-        for i in range(len(route) - 2):
+        for i in range(1, len(route) - 2):
             node1 = route[i]
             node2 = route[i + 1]
 

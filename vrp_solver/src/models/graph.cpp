@@ -35,6 +35,10 @@ double Graph::getDistance(const uint16_t from, const uint16_t to) const {
     if (from == to) {
         return 0.0;
     }
+    if (from == -1 || to == -1) {
+        std::cout << "invalid distance" << std::endl;
+        return 0.0;
+    }
 
     uint16_t newFrom = to;
     uint16_t newTo = from;

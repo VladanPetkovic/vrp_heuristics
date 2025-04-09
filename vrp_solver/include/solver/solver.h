@@ -22,6 +22,8 @@ public:
 
     virtual void solve() = 0;
 
+    virtual int getIterations() const;
+
     virtual void printRoutes() const;
 
     std::list<Route> &getRoutes();

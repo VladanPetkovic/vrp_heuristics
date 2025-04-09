@@ -19,6 +19,7 @@ add_executable(vrp_solver
         src/models/vehicle.cpp
         # helper
         src/helper/command_line_parser.cpp
+        src/helper/performance_metrics.cpp
         src/helper/solver_helper.cpp
         src/helper/xml_converter.cpp
         # lib

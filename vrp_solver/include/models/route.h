@@ -22,6 +22,8 @@ public:
 
     uint16_t getTotalQuantity(Graph &graph) const;
 
+    uint8_t getSize() const;
+
     bool hasNode(uint16_t id) const;
 
     bool startsWith(uint16_t id) const;

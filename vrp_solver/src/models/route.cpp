@@ -36,6 +36,10 @@ uint16_t Route::getTotalQuantity(Graph &graph) const {
     return total;
 }
 
+uint8_t Route::getSize() const {
+    return size;
+}
+
 bool Route::hasNode(uint16_t node_id) const {
     for (uint8_t i = 0; i < size; ++i) {
         if (nodes[i] == node_id) {

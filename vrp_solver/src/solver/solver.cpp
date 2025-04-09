@@ -19,3 +19,7 @@ void Solver::printRoutes() const {
 std::list<Route> &Solver::getRoutes() {
     return routes;
 }
+
+int Solver::getIterations() const {
+    return 1;
+}

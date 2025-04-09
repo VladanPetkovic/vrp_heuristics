@@ -39,12 +39,6 @@ void CommandLineParser::printUsageAndExit() {
             << "\n\t\t-i <input_file_path>       Path to input file"
             << "\n\t\t-o <output_file_path>      Path to output file"
             << "\n\t\t-a <algorithm_name>        Algorithm to use"
-            << "\n\t\t                          Options: nearest_neighbor, savings_clark_wright";
+            << "\n\t\t                          Options: nearest_neighbor, savings_clark_wright\n";
     exit(EXIT_FAILURE);
-}
-
-AlgorithmType CommandLineParser::algorithmFromString(const std::string &str) {
-    if (str == "nearest_neighbor") return AlgorithmType::NearestNeighbor;
-    if (str == "savings_clark_wright") return AlgorithmType::SavingsClarkWright;
-    throw std::invalid_argument("Unknown algorithm: " + str);
 }

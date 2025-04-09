@@ -8,6 +8,7 @@ visualization
 vrp_solver/.idea
 vrp_solver/cmake-build-debug
 vrp_solver/out
+vrp_solver/performance.csv
 
 # data_analysis
 data_analysis/.idea

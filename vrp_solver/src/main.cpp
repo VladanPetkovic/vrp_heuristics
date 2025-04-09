@@ -4,6 +4,7 @@
 #include <helper/xml_converter.h>
 #include <solver/solver.h>
 #include <helper/command_line_parser.h>
+#include <helper/performance_metrics.h>
 #include <helper/solver_helper.h>
 
 int main(int argc, char *argv[]) {
@@ -27,6 +28,12 @@ int main(int argc, char *argv[]) {
 
     // output solution
     bool properlySaved = XMLConverter::saveSolutionToFile(solver->getRoutes(), graph, program_options.outputFilePath);
+
+    // save duration
+    if (properlySaved) {
+        PerformanceMetrics performance = PerformanceMetrics(program_options, graph, *solver, vehicle, duration);
+        performance.save();
+    }
 
     return properlySaved ? EXIT_SUCCESS : EXIT_FAILURE;
 }

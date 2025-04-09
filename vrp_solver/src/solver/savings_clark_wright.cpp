@@ -16,15 +16,16 @@ void SavingsClarkWright::solve() {
 void SavingsClarkWright::initRoutes() {
     uint16_t start_node_id = vehicle.getDepartureNode().getId();
     uint16_t num_of_nodes = graph.getNumNodes();
-    routes.assign(num_of_nodes - 1, Route()); // subtract departure_node
-    // then perform the savings algorithm
-    for (uint16_t node_id = start_node_id + 1; node_id <= num_of_nodes; ++node_id) {
-        auto it = routes.begin();
-        std::advance(it, node_id - 2);
 
-        it->addNode(start_node_id);
-        it->addNode(node_id);
-        it->addNode(start_node_id);
+    // then perform the savings algorithm
+    for (uint16_t node_id = 1; node_id <= num_of_nodes; ++node_id) {
+        if (node_id == start_node_id) continue;
+
+        Route route = Route();
+        route.addNode(start_node_id);
+        route.addNode(node_id);
+        route.addNode(start_node_id);
+        routes.push_back(route);
     }
 }
 
@@ -32,8 +33,10 @@ void SavingsClarkWright::calculateSavings() {
     uint16_t start_node_id = vehicle.getDepartureNode().getId();
     uint16_t num_of_nodes = graph.getNumNodes();
 
-    for (uint16_t current_id = start_node_id + 1; current_id <= num_of_nodes; ++current_id) {
+    for (uint16_t current_id = 1; current_id <= num_of_nodes; ++current_id) {
+        if (current_id == start_node_id) continue;
         for (uint16_t other_id = current_id + 1; other_id <= num_of_nodes; ++other_id) {
+            if (other_id == start_node_id) continue;
             double d_curr_depot = graph.getDistance(current_id, start_node_id);
             double d_other_depot = graph.getDistance(other_id, start_node_id);
             double d_curr_other = graph.getDistance(current_id, other_id);
@@ -65,9 +68,10 @@ void SavingsClarkWright::combineRoutes(uint16_t from, uint16_t to) {
     if (from_it == routes.end() || to_it == routes.end() || from_it == to_it)
         return;
 
+    // TODO: check this part of code again
     // Ensure 'from' is at the end of one route, and 'to' is at the beginning of the other
-    if (!from_it->endsWith(from) || !to_it->startsWith(to))
-        return;
+    // if (!from_it->endsWith(from) || !to_it->startsWith(to))
+    //     return;
 
     uint16_t total_quantity = from_it->getTotalQuantity(graph) + to_it->getTotalQuantity(graph);
     if (vehicle.exceedsCapacity(total_quantity))
