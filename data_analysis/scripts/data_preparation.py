@@ -1,7 +1,5 @@
 import numpy as np
 import pandas as pd
-import networkx as nx
-import os
 import sys
 import glob
 
@@ -10,9 +8,8 @@ from scripts.xml_parser import *
 
 
 def prepare_data():
-    # read in the data.csv to one
     combine_statistics_of_test_data()
-    analyze_tests()
+    analyze_tests_and_save()
 
 
 def combine_statistics_of_test_data():
@@ -25,13 +22,13 @@ def combine_statistics_of_test_data():
     combined_df.to_csv('test_data/data_stats.csv', index=False, sep=';')
 
 
-def analyze_tests():
+def analyze_tests_and_save():
     dir_list = ['test_data/augerat_1995_set_a',
                 'test_data/christofides_et_al_1979_cmt',
                 'test_data/uchoa_et_al_2014']
 
-    csv_path = 'data_stats.csv'
-    if not os.path.exists(csv_path):
+    csv_path = 'test_data/data_stats.csv'
+    if not file_exists(csv_path):
         print("CSV file does not exist.")
         sys.exit(1)
 
@@ -59,7 +56,7 @@ def analyze_tests():
                 continue
 
             # analyze node-placement
-            entropy = get_degree_entropy(nodes)
+            entropy = get_spatial_entropy(nodes)
             # get depot location
             abs_pos, rel_horiz_pos, rel_vert_pos = get_depot_placement(nodes)
 
@@ -70,7 +67,7 @@ def analyze_tests():
             df.loc[df['instance_name'] == instance_name, 'depot_rel_vert_pos'] = rel_vert_pos
 
     # save file
-    df.to_csv(csv_path, index=False)
+    df.to_csv(csv_path, sep=';', index=False)
 
 
 def get_depot_placement(nodes):
@@ -139,20 +136,23 @@ def get_relative_depot_placement(coords, depot_x, depot_y):
     return horizontal_position_rel, vertical_position_rel
 
 
-def get_degree_entropy(nodes):
-    active_nodes = {node_id: (x, y) for node_id, (x, y, qty) in nodes.items() if qty > 0}
+def get_spatial_entropy(nodes, grid_size=10):
+    active_coords = [(x, y) for _, (x, y, qty) in nodes.items() if qty > 0]
+    if not active_coords:
+        return 0
 
-    G = nx.Graph()
+    xs, ys = zip(*active_coords)
+    x_min, x_max = min(xs), max(xs)
+    y_min, y_max = min(ys), max(ys)
 
-    for node_id in active_nodes:
-        G.add_node(node_id)
+    # creating grid
+    cell_counts = np.zeros((grid_size, grid_size))
+    for x, y in active_coords:
+        xi = int((x - x_min) / (x_max - x_min + 1e-6) * (grid_size - 1))
+        yi = int((y - y_min) / (y_max - y_min + 1e-6) * (grid_size - 1))
+        cell_counts[yi, xi] += 1
 
-    node_ids = list(active_nodes.keys())
-    for i in range(len(node_ids)):
-        for j in range(i + 1, len(node_ids)):
-            G.add_edge(node_ids[i], node_ids[j])
-
-    degrees = np.array([d for _, d in G.degree()])
-    probs = degrees / degrees.sum()
-    entropy = -np.sum(probs * np.log2(probs + 1e-10))  # epsilon to prevent log(0)
+    probs = cell_counts.flatten() / len(active_coords)
+    probs = probs[probs > 0]  # remove empty cells
+    entropy = -np.sum(probs * np.log2(probs + 1e-10))
     return entropy

@@ -23,14 +23,17 @@ public:
 
     static std::string extractInstanceName(const std::string &full_path);
 
+    static std::string extractFolderName(const std::string &full_path);
+
     void save() const;
 
 private:
-    std::chrono::duration<long, std::ratio<1, 1000000> > duration;
+    int duration;
     int number_of_iterations; // TODO: later for metaheuristics
     int number_of_vehicles;
     double total_distance;
     std::string instance_name;
+    std::string folder_name;
     AlgorithmType algorithm;
 };
 

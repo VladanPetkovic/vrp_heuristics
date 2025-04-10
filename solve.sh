@@ -5,10 +5,12 @@ dir_christofides="christofides_et_al_1979_cmt"
 dir_uchoa="uchoa_et_al_2014"
 dir_solution="solution"
 
+performance_file_path="test_data/performance.csv"
+dir_output="$dir_solution/stats"
+
 ##########################
 # algorithms
 algorithms=('nearest_neighbor' 'savings_clark_wright') # add additional separating with space
-
 
 ##########################
 
@@ -29,3 +31,9 @@ for dir in "$dir_augerat" "$dir_christofides" "$dir_uchoa"; do
         done
     done
 done
+
+cd ".."
+# run statistics afterwards
+# REMEMBER TO COPY A NEW VERSION OF data_stats.csv IF NEEDED
+echo /usr/bin/python3.10 data_analysis/main_analyze.py "$performance_file_path" "$dir_output"
+/usr/bin/python3.10 data_analysis/main_analyze.py "$performance_file_path" "$dir_output"
