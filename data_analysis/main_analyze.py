@@ -1,14 +1,12 @@
 import argparse
-from scripts.analysis import analyze
+from scripts.analysis import *
+from scripts.data_preparation import *
 
-# TODO: we only need test_data_analyzed.csv
-# --> therefore another main, that merges all three and evaluates customers and depot-location
-parser = argparse.ArgumentParser(description="Analyze VRP-heuristic solution from XML")
-parser.add_argument('input_file', type=str, help="file-path to the XML graph")
-parser.add_argument('solution_file', type=str, help="path to the XML solution")
+# run this to prepare the test_data (only once needed)
+prepare_data()
 
-args = parser.parse_args()
-analyze(args.input_file, args.solution_file)
+# run this to analyze the solution
+analyze_solution()
 
 # TODO
 # 1. analyze the test_data (data.csv)--> customer and depot-location is missing (save and reuse)
