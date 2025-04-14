@@ -18,11 +18,21 @@ public:
 
     void addNode(uint16_t id);
 
+    void addNodeToFront(uint16_t id);
+
+    void insertNodeAt(uint8_t index, uint16_t id);
+
+    uint8_t findNodeIndex(uint16_t id) const;
+
     void printRoute() const;
 
     uint16_t getTotalQuantity(Graph &graph) const;
 
     uint8_t getSize() const;
+
+    bool isEmpty() const;
+
+    bool operator==(const Route &route) const;
 
     bool hasNode(uint16_t id) const;
 

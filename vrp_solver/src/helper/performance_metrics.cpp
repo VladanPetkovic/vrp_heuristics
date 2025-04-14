@@ -26,6 +26,7 @@ PerformanceMetrics::PerformanceMetrics(const ArgumentOptions &options, Graph &gr
         }
     }
     this->total_distance = total_distance;
+    std::cout << "Total distance " << total_distance << std::endl;
 }
 
 

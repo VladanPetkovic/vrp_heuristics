@@ -21,6 +21,40 @@ void Route::addNode(const uint16_t id) {
     }
 }
 
+void Route::addNodeToFront(const uint16_t id) {
+    if (size >= MAX_COUNT_NODES_PER_ROUTE) {
+        std::cerr << "Route is full! Cannot add node to front.\n";
+        return;
+    }
+
+    for (int i = size; i > 0; --i) {
+        nodes[i] = nodes[i - 1];
+    }
+    nodes[1] = id; // the first one is always the depot
+    ++size;
+}
+
+void Route::insertNodeAt(uint8_t index, uint16_t id) {
+    if (size >= MAX_COUNT_NODES_PER_ROUTE || index > size) {
+        std::cerr << "Invalid index or route full!\n";
+        return;
+    }
+    for (int i = size; i > index; --i) {
+        nodes[i] = nodes[i - 1];
+    }
+    nodes[index] = id;
+    ++size;
+}
+
+uint8_t Route::findNodeIndex(uint16_t id) const {
+    for (uint8_t i = 0; i < size; ++i) {
+        if (nodes[i] == id) {
+            return i;
+        }
+    }
+    return -1; // not found
+}
+
 void Route::printRoute() const {
     for (uint16_t i = 0; i < size; i++) {
         std::cout << nodes[i] << " ";
@@ -38,6 +72,22 @@ uint16_t Route::getTotalQuantity(Graph &graph) const {
 
 uint8_t Route::getSize() const {
     return size;
+}
+
+bool Route::isEmpty() const {
+    return size == 0;
+}
+
+bool Route::operator==(const Route &route) const {
+    if (this->size != route.size) {
+        return false;
+    }
+    for (uint8_t i = 0; i < size; ++i) {
+        if (this->nodes[i] != route.nodes[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Route::hasNode(uint16_t node_id) const {

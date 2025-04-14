@@ -51,46 +51,65 @@ void SavingsClarkWright::calculateSavings() {
 
 void SavingsClarkWright::combineRoutes(uint16_t from, uint16_t to) {
     uint16_t start_node_id = vehicle.getDepartureNode().getId();
-    auto from_it = routes.end();
-    auto to_it = routes.end();
+    Route *from_route = nullptr;
+    Route *to_route = nullptr;
 
-    // Find routes containing 'from' and 'to'
-    for (auto it = routes.begin(); it != routes.end(); ++it) {
-        if (it->hasNode(from)) {
-            from_it = it;
+    // finding from and to
+    for (auto &route: routes) {
+        if (route.hasNode(from)) {
+            from_route = &route;
         }
-        if (it->hasNode(to)) {
-            to_it = it;
+        if (route.hasNode(to)) {
+            to_route = &route;
         }
     }
 
-    // Can't merge if same route or either not found
-    if (from_it == routes.end() || to_it == routes.end() || from_it == to_it)
+    if (from_route == nullptr || to_route == nullptr || from_route == to_route) {
         return;
+    }
 
-    // TODO: check this part of code again
-    // Ensure 'from' is at the end of one route, and 'to' is at the beginning of the other
-    // if (!from_it->endsWith(from) || !to_it->startsWith(to))
-    //     return;
-
-    uint16_t total_quantity = from_it->getTotalQuantity(graph) + to_it->getTotalQuantity(graph);
-    if (vehicle.exceedsCapacity(total_quantity))
+    uint16_t total_quantity = from_route->getTotalQuantity(graph) + to_route->getTotalQuantity(graph);
+    if (vehicle.exceedsCapacity(total_quantity)) {
         return;
+    }
 
-    // Merge: remove depot from end of 'from' and beginning of 'to'
-    from_it->removeLast(); // depot
-    to_it->removeFirst(); // depot
+    // MERGE
+    bool is_at_start = from_route->startsWith(from);
+    bool is_at_end = from_route->endsWith(from);
 
-    // add all nodes from to-route to from-route
-    for (uint16_t node: to_it->getNodes()) {
-        if (node == start_node_id || node == -1) {
-            break;
+    if (is_at_start || is_at_end) {
+        for (short node: to_route->getNodes()) {
+            if (node == start_node_id) {
+                continue;
+            }
+            if (node == -1) {
+                break;
+            }
+
+            if (is_at_start) {
+                from_route->addNodeToFront(node);
+            } else if (is_at_end) {
+                from_route->addNode(node);
+            }
         }
-        from_it->addNode(node);
+    } else {
+        uint8_t from_index = from_route->findNodeIndex(from);
+        if (from_index == -1) return;
+
+        uint8_t insert_at = from_index + 1;
+        for (short node: to_route->getNodes()) {
+            if (node == start_node_id) {
+                continue;
+            }
+            if (node == -1) {
+                break;
+            }
+            from_route->insertNodeAt(insert_at++, node);
+        }
     }
 
     // add depot to the end
-    from_it->addNode(vehicle.getDepartureNode().getId());
+    from_route->addNode(vehicle.getDepartureNode().getId());
 
-    routes.erase(to_it);
+    routes.remove(*to_route);
 }

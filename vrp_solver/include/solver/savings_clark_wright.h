@@ -6,6 +6,7 @@
 #define SAVINGS_CLARK_WRIGHT_H
 
 #include <solver/solver.h>
+#include <models/route.h>
 
 struct Saving {
   uint16_t from_node_id;
