@@ -16,6 +16,10 @@ public:
 
     virtual ~Route();
 
+    static constexpr uint8_t MAX_COUNT_NODES_PER_ROUTE = 50;
+
+    void setRoute(std::array<short, MAX_COUNT_NODES_PER_ROUTE> newRoute);
+
     void addNode(uint16_t id);
 
     void addNodeToFront(uint16_t id);
@@ -43,8 +47,6 @@ public:
     void removeFirst();
 
     void removeLast();
-
-    static constexpr uint8_t MAX_COUNT_NODES_PER_ROUTE = 50;
 
     std::array<short, MAX_COUNT_NODES_PER_ROUTE> getNodes() const;
 

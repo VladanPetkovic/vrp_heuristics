@@ -8,14 +8,13 @@ dir_solution="solution"
 
 ##########################
 # algorithms
-algorithms=('nearest_neighbor' 'savings_clark_wright') # add additional separating with space
-
+algorithms=('nearest_neighbor' 'savings_clark_wright' 'lambda_opt_nn' 'lambda_opt_savings')
 
 ##########################
 
 cd "test_data"
-# run visualization for all data
-for dir in "$dir_augerat" "$dir_christofides" "$dir_uchoa"; do
+# run visualization for all data (ignoring large data)
+for dir in "$dir_augerat" "$dir_christofides"; do
     for algorithm in "${algorithms[@]}"; do
         # create subdirectory for algorithm and data set
         mkdir -p "../$dir_visualization/$algorithm/$dir"

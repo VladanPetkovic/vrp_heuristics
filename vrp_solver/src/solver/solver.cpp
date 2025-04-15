@@ -20,6 +20,10 @@ std::list<Route> &Solver::getRoutes() {
     return routes;
 }
 
+void Solver::setRoutes(const std::list<Route> &newRoutes) {
+    routes = newRoutes;
+}
+
 int Solver::getIterations() const {
     return 1;
 }

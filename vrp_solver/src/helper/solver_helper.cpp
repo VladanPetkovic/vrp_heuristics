@@ -10,6 +10,10 @@ std::unique_ptr<Solver> SolverHelper::createSolver(Graph &graph, Vehicle &vehicl
             return std::make_unique<NearestNeighbor>(graph, vehicle);
         case AlgorithmType::SavingsClarkWright:
             return std::make_unique<SavingsClarkWright>(graph, vehicle);
+        case AlgorithmType::LambdaOptNN:
+            return std::make_unique<LambdaOptNN>(graph, vehicle);
+        case AlgorithmType::LambdaOptSavings:
+            return std::make_unique<LambdaOptSavings>(graph, vehicle);
     }
     throw std::invalid_argument("Unknown algorithm");
 }

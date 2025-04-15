@@ -13,6 +13,21 @@ Route::~Route() {
     // dtor
 }
 
+void Route::setRoute(const std::array<short, MAX_COUNT_NODES_PER_ROUTE> newRoute) {
+    uint8_t newRouteSize = 0;
+    for (uint8_t i = 0; i < newRoute.size() && newRoute[i] != -1; i++) {
+        newRouteSize++;
+    }
+
+    if (newRouteSize > size) {
+        std::cerr << "Larger route then existing." << std::endl;
+        return;
+    }
+    for (uint8_t i = 0; i < size; ++i) {
+        nodes[i] = newRoute[i];
+    }
+}
+
 void Route::addNode(const uint16_t id) {
     if (size < MAX_COUNT_NODES_PER_ROUTE) {
         nodes[size++] = id;

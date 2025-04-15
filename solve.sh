@@ -10,7 +10,7 @@ dir_output="$dir_solution/stats"
 
 ##########################
 # algorithms
-algorithms=('nearest_neighbor' 'savings_clark_wright') # add additional separating with space
+algorithms=('nearest_neighbor' 'savings_clark_wright' 'lambda_opt_nn' 'lambda_opt_savings')
 
 ##########################
 

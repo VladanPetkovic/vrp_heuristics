@@ -28,6 +28,8 @@ public:
 
     std::list<Route> &getRoutes();
 
+    void setRoutes(const std::list<Route> &newRoutes);
+
 protected:
     Graph &graph;
     Vehicle &vehicle;

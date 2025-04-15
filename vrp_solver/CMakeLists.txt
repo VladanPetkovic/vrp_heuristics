@@ -9,6 +9,9 @@ add_executable(vrp_solver
         # main
         src/main.cpp
         # solver
+        src/solver/lambda_opt.cpp
+        src/solver/lambda_opt_nn.cpp
+        src/solver/lambda_opt_savings.cpp
         src/solver/nearest_neighbor.cpp
         src/solver/savings_clark_wright.cpp
         src/solver/solver.cpp
