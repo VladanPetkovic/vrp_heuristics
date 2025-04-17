@@ -13,24 +13,51 @@ Route::~Route() {
     // dtor
 }
 
-void Route::setRoute(const std::array<short, MAX_COUNT_NODES_PER_ROUTE> newRoute) {
+void Route::setRoute(const std::array<short, MAX_COUNT_NODES_PER_ROUTE> &newRoute) {
     uint8_t newRouteSize = 0;
     for (uint8_t i = 0; i < newRoute.size() && newRoute[i] != -1; i++) {
         newRouteSize++;
     }
 
-    if (newRouteSize > size) {
-        std::cerr << "Larger route then existing." << std::endl;
-        return;
-    }
-    for (uint8_t i = 0; i < size; ++i) {
-        nodes[i] = newRoute[i];
+    // reset route
+    nodes.fill(-1);
+    size = 0;
+
+    // add nodes
+    for (const auto node_id: newRoute) {
+        if (node_id != -1) {
+            addNode(node_id);
+        }
     }
 }
 
 void Route::addNode(const uint16_t id) {
+    uint8_t count = 0;
+    uint16_t depot_id = nodes[0];
+
+    for (auto i = 0; i < size; i++) {
+        if (nodes[i] == id) {
+            count++;
+        }
+    }
+    if (count >= 2) {
+        return; // only depot can be inserted two times
+    }
+
     if (size < MAX_COUNT_NODES_PER_ROUTE) {
-        nodes[size++] = id;
+        if (size >= 3) {
+            // depot at end
+            if (depot_id == nodes[size - 1]) {
+                nodes[size - 1] = id;
+                nodes[size] = depot_id;
+                size++;
+            } else {
+                // depot not at end
+                nodes[size++] = id;
+            }
+        } else {
+            nodes[size++] = id;
+        }
     } else {
         std::cerr << "Route is full! Cannot add more nodes.\n";
     }
@@ -42,7 +69,7 @@ void Route::addNodeToFront(const uint16_t id) {
         return;
     }
 
-    for (int i = size; i > 0; --i) {
+    for (auto i = size; i > 0; --i) {
         nodes[i] = nodes[i - 1];
     }
     nodes[1] = id; // the first one is always the depot
@@ -54,7 +81,7 @@ void Route::insertNodeAt(uint8_t index, uint16_t id) {
         std::cerr << "Invalid index or route full!\n";
         return;
     }
-    for (int i = size; i > index; --i) {
+    for (auto i = size; i > index; --i) {
         nodes[i] = nodes[i - 1];
     }
     nodes[index] = id;

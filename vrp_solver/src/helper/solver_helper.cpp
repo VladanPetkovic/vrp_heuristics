@@ -14,6 +14,10 @@ std::unique_ptr<Solver> SolverHelper::createSolver(Graph &graph, Vehicle &vehicl
             return std::make_unique<LambdaOptNN>(graph, vehicle);
         case AlgorithmType::LambdaOptSavings:
             return std::make_unique<LambdaOptSavings>(graph, vehicle);
+        // case AlgorithmType::LambdaInterchangeNN:
+        //     return std::make_unique<LambdaInterchangeNN>(graph, vehicle);
+        case AlgorithmType::LambdaInterchangeSavings:
+            return std::make_unique<LambdaInterchangeSavings>(graph, vehicle);
     }
     throw std::invalid_argument("Unknown algorithm");
 }

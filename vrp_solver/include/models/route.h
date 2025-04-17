@@ -16,9 +16,9 @@ public:
 
     virtual ~Route();
 
-    static constexpr uint8_t MAX_COUNT_NODES_PER_ROUTE = 50;
+    static constexpr uint8_t MAX_COUNT_NODES_PER_ROUTE = 64;
 
-    void setRoute(std::array<short, MAX_COUNT_NODES_PER_ROUTE> newRoute);
+    void setRoute(const std::array<short, MAX_COUNT_NODES_PER_ROUTE> &newRoute);
 
     void addNode(uint16_t id);
 

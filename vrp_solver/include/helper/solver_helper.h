@@ -10,6 +10,7 @@
 #include <solver/solver.h>
 #include <solver/lambda_opt_nn.h>
 #include <solver/lambda_opt_savings.h>
+#include <solver/lambda_interchange_savings.h>
 #include <solver/nearest_neighbor.h>
 #include <solver/savings_clark_wright.h>
 #include <helper/command_line_parser.h>

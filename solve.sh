@@ -10,7 +10,8 @@ dir_output="$dir_solution/stats"
 
 ##########################
 # algorithms
-algorithms=('nearest_neighbor' 'savings_clark_wright' 'lambda_opt_nn' 'lambda_opt_savings')
+#algorithms=('nearest_neighbor' 'savings_clark_wright' 'lambda_opt_nn' 'lambda_opt_savings')
+algorithms=('lambda_interchange_savings' 'lambda_opt_nn' 'lambda_opt_savings')
 
 ##########################
 

@@ -9,6 +9,8 @@ add_executable(vrp_solver
         # main
         src/main.cpp
         # solver
+        src/solver/lambda_interchange.cpp
+        src/solver/lambda_interchange_savings.cpp
         src/solver/lambda_opt.cpp
         src/solver/lambda_opt_nn.cpp
         src/solver/lambda_opt_savings.cpp

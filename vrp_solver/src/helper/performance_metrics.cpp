@@ -27,6 +27,13 @@ PerformanceMetrics::PerformanceMetrics(const ArgumentOptions &options, Graph &gr
     }
     this->total_distance = total_distance;
     std::cout << "Total distance " << total_distance << std::endl;
+    if (!everyNodeVisited(graph, solver)) {
+        std::cout << "Not visited every node!" << std::endl;
+    }
+    if (!routeIsCorrect(solver, vehicle)) {
+        std::cout << "Route invalid!" << std::endl;
+    }
+    // TODO: check, if vehicle capacity was exceeded
 }
 
 
@@ -65,4 +72,51 @@ std::string PerformanceMetrics::extractFolderName(const std::string &full_path) 
     const std::filesystem::path path(full_path);
     auto parent_dir = path.parent_path().filename().string();
     return parent_dir;
+}
+
+bool PerformanceMetrics::everyNodeVisited(Graph &graph, Solver &solver) const {
+    uint16_t num_of_nodes = graph.getNumNodes();
+    std::vector visited(num_of_nodes, false);
+
+    for (auto route: solver.getRoutes()) {
+        for (auto node: route.getNodes()) {
+            if (node != -1) {
+                visited[node - 1] = true;
+            }
+        }
+    }
+
+    for (uint16_t i = 0; i < visited.size(); ++i) {
+        if (!visited[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool PerformanceMetrics::routeIsCorrect(Solver &solver, Vehicle &vehicle) const {
+    uint16_t start_node_id = vehicle.getDepartureNode().getId();
+
+    if (start_node_id != vehicle.getArrivalNode().getId()) {
+        std::cerr << "Departure and arrival nodes not matching!" << std::endl;
+        return false;
+    }
+
+    for (auto route: solver.getRoutes()) {
+        uint8_t route_size = route.getSize() - 1;
+        auto route_nodes = route.getNodes();
+        for (uint8_t i = 0; i < Route::MAX_COUNT_NODES_PER_ROUTE; ++i) {
+            auto node = route_nodes[i];
+            if (node == -1 && i < route_size) {
+                std::cerr << "-1 before route-size!" << std::endl;
+                return false;
+            }
+
+            if ((i == 0 || i == route_size) && node != start_node_id) {
+                std::cerr << "Depot-node not at start and finish!" << std::endl;
+                return false;
+            }
+        }
+    }
+    return true;
 }

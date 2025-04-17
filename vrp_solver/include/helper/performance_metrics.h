@@ -35,6 +35,10 @@ private:
     std::string instance_name;
     std::string folder_name;
     AlgorithmType algorithm;
+
+    bool everyNodeVisited(Graph &graph, Solver &solver) const;
+
+    bool routeIsCorrect(Solver &solver, Vehicle &vehicle) const;
 };
 
 

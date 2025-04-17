@@ -13,22 +13,8 @@ Node *Graph::getNode(uint16_t id) {
     return &nodes.at(id);
 }
 
-// void Graph::addEdge(int from, int to) {
-//     edges.emplace_back(from, to);
-// }
-
 uint16_t Graph::getNumNodes() const {
     return nodes.size();
-}
-
-void Graph::printGraph() const {
-    std::cout << "Nodes:\n";
-    for (const auto &[id, node]: nodes) {
-        std::cout << id << ": " << node.getId()
-                << " x: " << node.getX()
-                << " y: " << node.getY()
-                << " quantity: " << static_cast<int>(node.getQuantity()) << "\n";
-    }
 }
 
 double Graph::getDistance(const uint16_t from, const uint16_t to) const {
