@@ -10,9 +10,9 @@
 #include <solver/lambda_opt.h>
 
 
-class LambdaOptNN : public Solver {
+class NNLambdaOpt : public Solver {
 public:
-    LambdaOptNN(Graph &graph, Vehicle &vehicle);
+    NNLambdaOpt(Graph &graph, Vehicle &vehicle, std::list<Route> &r);
 
     void solve() override;
 

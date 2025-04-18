@@ -12,20 +12,20 @@
 enum class AlgorithmType {
     NearestNeighbor,
     SavingsClarkWright,
-    LambdaOptNN,
-    LambdaOptSavings,
-    LambdaInterchangeNN,
-    LambdaInterchangeSavings
+    NNLambdaOpt,
+    SavingsLambdaOpt,
+    NNImprovement,
+    SavingsImprovement
 };
 
 inline std::string to_string(const AlgorithmType algo) {
     switch (algo) {
         case AlgorithmType::NearestNeighbor: return "nearest_neighbor";
         case AlgorithmType::SavingsClarkWright: return "savings_clark_wright";
-        case AlgorithmType::LambdaOptNN: return "lambda_opt_nn";
-        case AlgorithmType::LambdaOptSavings: return "lambda_opt_savings";
-        case AlgorithmType::LambdaInterchangeNN: return "lambda_interchange_nn";
-        case AlgorithmType::LambdaInterchangeSavings: return "lambda_interchange_savings";
+        case AlgorithmType::NNLambdaOpt: return "nn_lambda_opt";
+        case AlgorithmType::SavingsLambdaOpt: return "savings_lambda_opt";
+        case AlgorithmType::NNImprovement: return "nn_improvement";
+        case AlgorithmType::SavingsImprovement: return "savings_improvement";
         default: return "Unknown";
     }
 }
@@ -33,10 +33,10 @@ inline std::string to_string(const AlgorithmType algo) {
 inline AlgorithmType algorithmFromString(const std::string &str) {
     if (str == "nearest_neighbor") return AlgorithmType::NearestNeighbor;
     if (str == "savings_clark_wright") return AlgorithmType::SavingsClarkWright;
-    if (str == "lambda_opt_nn") return AlgorithmType::LambdaOptNN;
-    if (str == "lambda_opt_savings") return AlgorithmType::LambdaOptSavings;
-    if (str == "lambda_interchange_nn") return AlgorithmType::LambdaInterchangeNN;
-    if (str == "lambda_interchange_savings") return AlgorithmType::LambdaInterchangeSavings;
+    if (str == "nn_lambda_opt") return AlgorithmType::NNLambdaOpt;
+    if (str == "savings_lambda_opt") return AlgorithmType::SavingsLambdaOpt;
+    if (str == "nn_improvement") return AlgorithmType::NNImprovement;
+    if (str == "savings_improvement") return AlgorithmType::SavingsImprovement;
     throw std::invalid_argument("Unknown algorithm: " + str);
 }
 

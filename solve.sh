@@ -10,14 +10,15 @@ dir_output="$dir_solution/stats"
 
 ##########################
 # algorithms
-#algorithms=('nearest_neighbor' 'savings_clark_wright' 'lambda_opt_nn' 'lambda_opt_savings')
-algorithms=('lambda_interchange_savings' 'lambda_opt_nn' 'lambda_opt_savings')
+#algorithms=('nearest_neighbor' 'savings_clark_wright' 'nn_lambda_opt' 'savings_lambda_opt' 'nn_improvement' 'savings_improvement')
+algorithms=('nn_lambda_opt' 'savings_lambda_opt' 'nn_improvement' 'savings_improvement')
 
 ##########################
 
 cd "test_data"
 # run solver for different test-data
-for dir in "$dir_augerat" "$dir_christofides" "$dir_uchoa"; do
+# TODO: add "$dir_uchoa"
+for dir in "$dir_augerat" "$dir_christofides"; do
     for algorithm in "${algorithms[@]}"; do
         # create subdirectory for algorithm and data set
         mkdir -p "../$dir_solution/$algorithm/$dir"

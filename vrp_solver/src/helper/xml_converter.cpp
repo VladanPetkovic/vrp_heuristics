@@ -45,7 +45,7 @@ void XMLConverter::loadGraphFromData(Graph &graph, Vehicle &vehicle, const std::
     graph.computeDistances();
 }
 
-bool XMLConverter::saveSolutionToFile(std::list<Route> &routes, Graph &graph, const std::string &filename) {
+bool XMLConverter::saveSolutionToFile(const std::list<Route> &routes, Graph &graph, const std::string &filename) {
     pugi::xml_document doc;
     pugi::xml_node routes_node = doc.append_child("routes");
 

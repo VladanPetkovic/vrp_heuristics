@@ -9,13 +9,14 @@ add_executable(vrp_solver
         # main
         src/main.cpp
         # solver
-        src/solver/lambda_interchange.cpp
-        src/solver/lambda_interchange_savings.cpp
+        src/solver/inter_route_improvement.cpp
         src/solver/lambda_opt.cpp
-        src/solver/lambda_opt_nn.cpp
-        src/solver/lambda_opt_savings.cpp
         src/solver/nearest_neighbor.cpp
+        src/solver/nn_improvement.cpp
+        src/solver/nn_lambda_opt.cpp
         src/solver/savings_clark_wright.cpp
+        src/solver/savings_lambda_opt.cpp
+        src/solver/savings_improvement.cpp
         src/solver/solver.cpp
         # models
         src/models/graph.cpp

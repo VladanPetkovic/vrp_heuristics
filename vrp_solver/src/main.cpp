@@ -10,6 +10,7 @@
 int main(int argc, char *argv[]) {
     Graph graph;
     Vehicle vehicle;
+    std::list<Route> routes;
     // get options
     ArgumentOptions program_options;
     CommandLineParser::parseArguments(program_options, argc, argv);
@@ -18,7 +19,7 @@ int main(int argc, char *argv[]) {
     XMLConverter::loadGraphFromData(graph, vehicle, program_options.inputFilePath);
 
     // create solution
-    std::unique_ptr<Solver> solver = SolverHelper::createSolver(graph, vehicle, program_options.algorithm);
+    std::unique_ptr<Solver> solver = SolverHelper::createSolver(graph, vehicle, routes, program_options.algorithm);
 
     auto start = std::chrono::high_resolution_clock::now();
     solver->solve();
@@ -29,7 +30,7 @@ int main(int argc, char *argv[]) {
     // output solution
     bool properlySaved = XMLConverter::saveSolutionToFile(solver->getRoutes(), graph, program_options.outputFilePath);
 
-    // save duration
+    // save and check metrics
     if (properlySaved) {
         PerformanceMetrics performance = PerformanceMetrics(program_options, graph, *solver, vehicle, duration);
         performance.save();

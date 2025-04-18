@@ -78,8 +78,8 @@ bool PerformanceMetrics::everyNodeVisited(Graph &graph, Solver &solver) const {
     uint16_t num_of_nodes = graph.getNumNodes();
     std::vector visited(num_of_nodes, false);
 
-    for (auto route: solver.getRoutes()) {
-        for (auto node: route.getNodes()) {
+    for (const auto &route: solver.getRoutes()) {
+        for (const auto node: route.getNodes()) {
             if (node != -1) {
                 visited[node - 1] = true;
             }
@@ -102,7 +102,7 @@ bool PerformanceMetrics::routeIsCorrect(Solver &solver, Vehicle &vehicle) const 
         return false;
     }
 
-    for (auto route: solver.getRoutes()) {
+    for (const auto& route: solver.getRoutes()) {
         uint8_t route_size = route.getSize() - 1;
         auto route_nodes = route.getNodes();
         for (uint8_t i = 0; i < Route::MAX_COUNT_NODES_PER_ROUTE; ++i) {

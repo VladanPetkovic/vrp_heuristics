@@ -20,13 +20,14 @@ struct Saving {
 
 class SavingsClarkWright : public Solver {
 public:
-  SavingsClarkWright(Graph &g, Vehicle &v) : Solver(g, v) {
+  SavingsClarkWright(Graph &g, Vehicle &v, std::list<Route> &r) : Solver(g, v, r) {
   }
 
   void solve() override;
 
 private:
   std::vector<Saving> savings_vector;
+
   void initRoutes();
 
   void calculateSavings();

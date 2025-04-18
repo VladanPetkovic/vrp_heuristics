@@ -9,7 +9,7 @@
 
 class LambdaOpt : public Solver {
 public:
-    LambdaOpt(Graph &graph, Vehicle &vehicle) : Solver(graph, vehicle) {
+    LambdaOpt(Graph &graph, Vehicle &vehicle, std::list<Route> &r) : Solver(graph, vehicle, r) {
     }
 
     void solve() override;

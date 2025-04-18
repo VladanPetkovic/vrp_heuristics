@@ -8,8 +8,8 @@ dir_solution="solution"
 
 ##########################
 # algorithms
-#algorithms=('nearest_neighbor' 'savings_clark_wright' 'lambda_opt_nn' 'lambda_opt_savings')
-algorithms=('lambda_interchange_savings' 'lambda_opt_nn' 'lambda_opt_savings')
+#algorithms=('nearest_neighbor' 'savings_clark_wright' 'nn_lambda_opt' 'savings_lambda_opt' 'nn_improvement' 'savings_improvement')
+algorithms=('savings_improvement')
 
 ##########################
 

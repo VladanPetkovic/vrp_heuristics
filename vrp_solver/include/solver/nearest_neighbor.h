@@ -9,7 +9,7 @@
 
 class NearestNeighbor : public Solver {
 public:
-    NearestNeighbor(Graph &graph, Vehicle &vehicle) : Solver(graph, vehicle) {
+    NearestNeighbor(Graph &graph, Vehicle &vehicle, std::list<Route> &routes) : Solver(graph, vehicle, routes) {
     }
 
     void solve() override;

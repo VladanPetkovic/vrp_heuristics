@@ -8,9 +8,10 @@
 #include <models/vehicle.h>
 #include <models/graph.h>
 #include <solver/solver.h>
-#include <solver/lambda_opt_nn.h>
-#include <solver/lambda_opt_savings.h>
-#include <solver/lambda_interchange_savings.h>
+#include <solver/nn_lambda_opt.h>
+#include "solver/nn_improvement.h"
+#include <solver/savings_lambda_opt.h>
+#include <solver/savings_improvement.h>
 #include <solver/nearest_neighbor.h>
 #include <solver/savings_clark_wright.h>
 #include <helper/command_line_parser.h>
@@ -18,7 +19,8 @@
 
 class SolverHelper {
 public:
-    static std::unique_ptr<Solver> createSolver(Graph &graph, Vehicle &vehicle, const AlgorithmType algorithmType);
+    static std::unique_ptr<Solver> createSolver(Graph &graph, Vehicle &vehicle, std::list<Route> &routes,
+                                                AlgorithmType algorithmType);
 };
 
 

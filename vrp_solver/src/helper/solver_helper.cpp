@@ -4,20 +4,21 @@
 
 #include <helper/solver_helper.h>
 
-std::unique_ptr<Solver> SolverHelper::createSolver(Graph &graph, Vehicle &vehicle, const AlgorithmType algorithmType) {
+std::unique_ptr<Solver> SolverHelper::createSolver(Graph &graph, Vehicle &vehicle, std::list<Route> &routes,
+                                                   const AlgorithmType algorithmType) {
     switch (algorithmType) {
         case AlgorithmType::NearestNeighbor:
-            return std::make_unique<NearestNeighbor>(graph, vehicle);
+            return std::make_unique<NearestNeighbor>(graph, vehicle, routes);
         case AlgorithmType::SavingsClarkWright:
-            return std::make_unique<SavingsClarkWright>(graph, vehicle);
-        case AlgorithmType::LambdaOptNN:
-            return std::make_unique<LambdaOptNN>(graph, vehicle);
-        case AlgorithmType::LambdaOptSavings:
-            return std::make_unique<LambdaOptSavings>(graph, vehicle);
-        // case AlgorithmType::LambdaInterchangeNN:
-        //     return std::make_unique<LambdaInterchangeNN>(graph, vehicle);
-        case AlgorithmType::LambdaInterchangeSavings:
-            return std::make_unique<LambdaInterchangeSavings>(graph, vehicle);
+            return std::make_unique<SavingsClarkWright>(graph, vehicle, routes);
+        case AlgorithmType::NNLambdaOpt:
+            return std::make_unique<NNLambdaOpt>(graph, vehicle, routes);
+        case AlgorithmType::SavingsLambdaOpt:
+            return std::make_unique<SavingsLambdaOpt>(graph, vehicle, routes);
+        case AlgorithmType::NNImprovement:
+            return std::make_unique<NNImprovement>(graph, vehicle, routes);
+        case AlgorithmType::SavingsImprovement:
+            return std::make_unique<SavingsImprovement>(graph, vehicle, routes);
     }
     throw std::invalid_argument("Unknown algorithm");
 }

@@ -13,7 +13,7 @@
 
 class Solver {
 public:
-    Solver(Graph &graph, Vehicle &vehicle) : graph(graph), vehicle(vehicle) {
+    Solver(Graph &graph, Vehicle &vehicle, std::list<Route> &routes) : graph(graph), vehicle(vehicle), routes(routes) {
     }
 
     // "using virtual for a correct destructor-chain"
@@ -24,16 +24,12 @@ public:
 
     virtual int getIterations() const;
 
-    virtual void printRoutes() const;
-
     std::list<Route> &getRoutes();
-
-    void setRoutes(const std::list<Route> &newRoutes);
 
 protected:
     Graph &graph;
     Vehicle &vehicle;
-    std::list<Route> routes;
+    std::list<Route> &routes;
 };
 
 

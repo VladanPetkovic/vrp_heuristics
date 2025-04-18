@@ -9,9 +9,9 @@
 #include <solver/savings_clark_wright.h>
 #include <solver/lambda_opt.h>
 
-class LambdaOptSavings : public Solver {
+class SavingsLambdaOpt : public Solver {
 public:
-    LambdaOptSavings(Graph &graph, Vehicle &vehicle);
+    SavingsLambdaOpt(Graph &graph, Vehicle &vehicle, std::list<Route> &r);
 
     void solve() override;
 
