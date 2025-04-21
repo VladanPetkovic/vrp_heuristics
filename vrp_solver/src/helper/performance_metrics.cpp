@@ -14,18 +14,7 @@ PerformanceMetrics::PerformanceMetrics(const ArgumentOptions &options, Graph &gr
     this->folder_name = extractFolderName(options.inputFilePath);
 
     // calculate total_distance
-    double total_distance = 0.0;
-    for (Route &route: solver.getRoutes()) {
-        short previous_node_id = 1;
-        for (short node_id: route.getNodes()) {
-            if (node_id == -1) {
-                break;
-            }
-            total_distance += graph.getDistance(previous_node_id, node_id);
-            previous_node_id = node_id;
-        }
-    }
-    this->total_distance = total_distance;
+    this->total_distance = solver.getTotalDistance(solver.getRoutes());
     std::cout << "Total distance " << total_distance << std::endl;
     if (!everyNodeVisited(graph, solver)) {
         std::cout << "Not visited every node!" << std::endl;
@@ -33,7 +22,9 @@ PerformanceMetrics::PerformanceMetrics(const ArgumentOptions &options, Graph &gr
     if (!routeIsCorrect(solver, vehicle)) {
         std::cout << "Route invalid!" << std::endl;
     }
-    // TODO: check, if vehicle capacity was exceeded
+    if (vehicleExceedsQuantity(solver, vehicle, graph)) {
+        std::cout << "Route invalid: Vehicle exceeds quantity!" << std::endl;
+    }
 }
 
 
@@ -102,7 +93,7 @@ bool PerformanceMetrics::routeIsCorrect(Solver &solver, Vehicle &vehicle) const 
         return false;
     }
 
-    for (const auto& route: solver.getRoutes()) {
+    for (const auto &route: solver.getRoutes()) {
         uint8_t route_size = route.getSize() - 1;
         auto route_nodes = route.getNodes();
         for (uint8_t i = 0; i < Route::MAX_COUNT_NODES_PER_ROUTE; ++i) {
@@ -119,4 +110,13 @@ bool PerformanceMetrics::routeIsCorrect(Solver &solver, Vehicle &vehicle) const 
         }
     }
     return true;
+}
+
+bool PerformanceMetrics::vehicleExceedsQuantity(Solver &solver, Vehicle &vehicle, Graph &graph) const {
+    for (Route &route: solver.getRoutes()) {
+        if (vehicle.exceedsCapacity(route.getTotalQuantity(graph))) {
+            return true;
+        }
+    }
+    return false;
 }

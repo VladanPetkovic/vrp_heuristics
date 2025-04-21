@@ -10,6 +10,7 @@ add_executable(vrp_solver
         src/main.cpp
         # solver
         src/solver/inter_route_improvement.cpp
+        src/solver/iterated_local_search.cpp
         src/solver/lambda_opt.cpp
         src/solver/nearest_neighbor.cpp
         src/solver/nn_improvement.cpp

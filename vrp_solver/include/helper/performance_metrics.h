@@ -29,7 +29,7 @@ public:
 
 private:
     int duration;
-    int number_of_iterations; // TODO: later for metaheuristics
+    int number_of_iterations;
     int number_of_vehicles;
     double total_distance;
     std::string instance_name;
@@ -39,6 +39,8 @@ private:
     bool everyNodeVisited(Graph &graph, Solver &solver) const;
 
     bool routeIsCorrect(Solver &solver, Vehicle &vehicle) const;
+
+    bool vehicleExceedsQuantity(Solver &solver, Vehicle &vehicle, Graph &graph) const;
 };
 
 
