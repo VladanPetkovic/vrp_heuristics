@@ -10,20 +10,23 @@ void LambdaOpt::solve() {
     }
 }
 
+int LambdaOpt::getIterations() const {
+    return _iterations;
+}
+
 /**
- * In this function we are looping to find the local optimum. (Strong local optimization)
+ * In this function, we are looping to find the local optimum. (Strong local optimization)
  * Another version is: Controlled Search (find the best one) - used inside a metaheuristic
  * @param route the route to optimize
  */
 void LambdaOpt::reconnectEdges(Route &route) {
     auto nodes = route.getNodes();
     uint8_t size = route.getSize();
-    uint8_t iterations = 0;
     bool improvement = true;
 
-    while (improvement && iterations < MAX_ITERATIONS) {
+    while (improvement && _iterations < MAX_ITERATIONS) {
         improvement = false;
-        iterations++;
+        _iterations++;
 
         for (uint8_t i = 1; i < size - 2; i++) {
             for (uint8_t j = 1; j < size - 1; j++) {

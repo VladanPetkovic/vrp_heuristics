@@ -14,17 +14,20 @@ void InterRouteImprovement::solve() {
     }
 }
 
+int InterRouteImprovement::getIterations() const {
+    return _iterations;
+}
+
 void InterRouteImprovement::reconnectEdges(Route &route, Route &neighbor_route) {
     auto nodes = route.getNodes();
     auto neighbor_nodes = neighbor_route.getNodes();
     uint8_t size = route.getSize();
     uint8_t neighbor_size = neighbor_route.getSize();
-    uint8_t iterations = 0; // TODO: save iterations
     bool improvement = true;
 
-    while (improvement && iterations < MAX_ITERATIONS) {
+    while (improvement && _iterations < MAX_ITERATIONS) {
         improvement = false;
-        iterations++;
+        _iterations++;
 
         for (uint8_t lambda = 1; lambda <= MAX_LAMBDA && !improvement; ++lambda) {
             if (size < lambda + 1) break;
@@ -42,11 +45,6 @@ void InterRouteImprovement::reconnectEdges(Route &route, Route &neighbor_route) 
                     }
                 }
             }
-            // TODO: check, if this is needed
-            // if (improvement) {
-            //     route.setRoute(nodes);
-            //     neighbor_route.setRoute(neighbor_nodes);
-            // }
         }
     }
 

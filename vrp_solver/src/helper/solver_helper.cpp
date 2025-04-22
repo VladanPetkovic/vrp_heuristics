@@ -19,6 +19,8 @@ std::unique_ptr<Solver> SolverHelper::createSolver(Graph &graph, Vehicle &vehicl
             return std::make_unique<NNImprovement>(graph, vehicle, routes);
         case AlgorithmType::SavingsImprovement:
             return std::make_unique<SavingsImprovement>(graph, vehicle, routes);
+        case AlgorithmType::IteratedLocalSearch:
+            return std::make_unique<IteratedLocalSearch>(graph, vehicle, routes);
     }
     throw std::invalid_argument("Unknown algorithm");
 }

@@ -14,9 +14,13 @@ public:
 
     void solve() override;
 
+    int getIterations() const override;
+
     const uint8_t MAX_ITERATIONS = 100;
 
 private:
+    int _iterations = 0;
+
     void reconnectEdges(Route &route);
 };
 

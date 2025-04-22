@@ -15,7 +15,8 @@ enum class AlgorithmType {
     NNLambdaOpt,
     SavingsLambdaOpt,
     NNImprovement,
-    SavingsImprovement
+    SavingsImprovement,
+    IteratedLocalSearch
 };
 
 inline std::string to_string(const AlgorithmType algo) {
@@ -26,6 +27,7 @@ inline std::string to_string(const AlgorithmType algo) {
         case AlgorithmType::SavingsLambdaOpt: return "savings_lambda_opt";
         case AlgorithmType::NNImprovement: return "nn_improvement";
         case AlgorithmType::SavingsImprovement: return "savings_improvement";
+        case AlgorithmType::IteratedLocalSearch: return "iterated_local_search";
         default: return "Unknown";
     }
 }
@@ -37,6 +39,7 @@ inline AlgorithmType algorithmFromString(const std::string &str) {
     if (str == "savings_lambda_opt") return AlgorithmType::SavingsLambdaOpt;
     if (str == "nn_improvement") return AlgorithmType::NNImprovement;
     if (str == "savings_improvement") return AlgorithmType::SavingsImprovement;
+    if (str == "iterated_local_search") return AlgorithmType::IteratedLocalSearch;
     throw std::invalid_argument("Unknown algorithm: " + str);
 }
 

@@ -17,17 +17,17 @@ public:
 
     void solve() override;
 
-    uint16_t getIterations() const override;
+    int getIterations() const override;
 
-    const uint8_t MAX_ITERATIONS = 100;
+    const int MAX_ITERATIONS = 200000;
 
-    const double ALPHA = 0.95;
+    const double ALPHA = 0.965;
 
 private:
     SavingsClarkWright _savings_clark_wright;
     InterRouteImprovement _inter_route_improvement;
     LambdaOpt _lambda_opt;
-    uint16_t _iterations = 0;
+    int _iterations = 0;
     double temperature = 1000.0;
 
     void initSolution();
@@ -35,6 +35,12 @@ private:
     void localSearch();
 
     void shake(uint8_t intensity);
+
+    void randomIntraSwap();
+
+    void randomInterMove();
+
+    void randomCrossExchange();
 
     bool accept(std::list<Route> &current, double new_cost) const;
 };

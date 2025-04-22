@@ -16,11 +16,15 @@ public:
 
     void solve() override;
 
+    int getIterations() const override;
+
     const uint8_t MAX_ITERATIONS = 100;
 
     const uint8_t MAX_LAMBDA = 2;
 
 private:
+    int _iterations = 0;
+
     void reconnectEdges(Route &route, Route &neighbor_route);
 
     void trySwap(std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> &new_route,

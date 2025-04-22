@@ -22,11 +22,13 @@ public:
 
     virtual void solve() = 0;
 
-    virtual uint16_t getIterations() const;
+    virtual int getIterations() const;
 
     double getTotalDistance(std::list<Route> &routes_list) const;
 
     std::list<Route> &getRoutes() const;
+
+    Route &getRoute(uint8_t index);
 
 protected:
     Graph &graph;

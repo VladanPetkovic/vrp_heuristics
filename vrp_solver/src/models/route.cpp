@@ -88,6 +88,17 @@ void Route::insertNodeAt(uint8_t index, uint16_t id) {
     ++size;
 }
 
+void Route::removeNodeFrom(uint8_t index) {
+    if (index >= size) {
+        std::cerr << "Invalid index" << std::endl;
+        return;
+    }
+    for (auto i = index; i < size; ++i) {
+        nodes[i] = nodes[i + 1];
+    }
+    --size;
+}
+
 uint8_t Route::findNodeIndex(uint16_t id) const {
     for (uint8_t i = 0; i < size; ++i) {
         if (nodes[i] == id) {
@@ -110,6 +121,24 @@ uint16_t Route::getTotalQuantity(Graph &graph) const {
         total += graph.getNode(nodes[i])->getQuantity();
     }
     return total;
+}
+
+double Route::getTotalDistance(const Graph &graph, Vehicle &vehicle) const {
+    double total_distance = 0;
+    short previous_node_id = vehicle.getDepartureNode().getId();
+    for (short i = 0; nodes[i] != -1 && i < size; i++) {
+        total_distance += graph.getDistance(previous_node_id, nodes[i]);
+        previous_node_id = nodes[i];
+    }
+    return total_distance;
+}
+
+uint16_t Route::getTotalQuantity() const {
+    return total_quantity;
+}
+
+void Route::setTotalQuantity(const double new_total_quantity) {
+    total_quantity = new_total_quantity;
 }
 
 uint8_t Route::getSize() const {
@@ -170,4 +199,12 @@ void Route::removeLast() {
 
 std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> Route::getNodes() const {
     return nodes;
+}
+
+short Route::getNodeIdAt(uint8_t index) const {
+    return nodes[index];
+}
+
+void Route::setNodeIdAt(const uint8_t index, const short id) {
+    nodes[index] = id;
 }
