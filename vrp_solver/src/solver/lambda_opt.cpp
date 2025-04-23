@@ -23,10 +23,11 @@ void LambdaOpt::reconnectEdges(Route &route) {
     auto nodes = route.getNodes();
     uint8_t size = route.getSize();
     bool improvement = true;
+    int iterations = 0;
 
-    while (improvement && _iterations < MAX_ITERATIONS) {
+    while (improvement && iterations < MAX_ITERATIONS) {
         improvement = false;
-        _iterations++;
+        iterations++;
 
         for (uint8_t i = 1; i < size - 2; i++) {
             for (uint8_t j = 1; j < size - 1; j++) {
@@ -50,6 +51,8 @@ void LambdaOpt::reconnectEdges(Route &route) {
             if (improvement) break;
         }
     }
+
+    _iterations = iterations;
 
     // update route
     route.setRoute(nodes);

@@ -24,10 +24,11 @@ void InterRouteImprovement::reconnectEdges(Route &route, Route &neighbor_route) 
     uint8_t size = route.getSize();
     uint8_t neighbor_size = neighbor_route.getSize();
     bool improvement = true;
+    int iterations = 0;
 
-    while (improvement && _iterations < MAX_ITERATIONS) {
+    while (improvement && iterations < MAX_ITERATIONS) {
         improvement = false;
-        _iterations++;
+        iterations++;
 
         for (uint8_t lambda = 1; lambda <= MAX_LAMBDA && !improvement; ++lambda) {
             if (size < lambda + 1) break;
@@ -47,6 +48,7 @@ void InterRouteImprovement::reconnectEdges(Route &route, Route &neighbor_route) 
             }
         }
     }
+    _iterations = iterations;
 
     // update route
     route.setRoute(nodes);

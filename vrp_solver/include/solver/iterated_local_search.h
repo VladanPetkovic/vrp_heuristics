@@ -19,16 +19,25 @@ public:
 
     int getIterations() const override;
 
-    const int MAX_ITERATIONS = 200000;
+    const int MAX_ITERATIONS = 100000;
 
-    const double ALPHA = 0.965;
+    const double TEMPERATURE_FACTOR = 0.1;
+
+    const double MIN_TEMPERATURE = 1e-2;
+
+    const uint16_t MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 20;
+
+    const double ALPHA = 0.985;
 
 private:
     SavingsClarkWright _savings_clark_wright;
     InterRouteImprovement _inter_route_improvement;
     LambdaOpt _lambda_opt;
     int _iterations = 0;
-    double temperature = 1000.0;
+    double _temperature;
+    double avg_arc_cost;
+
+    void setTemperature();
 
     void initSolution();
 

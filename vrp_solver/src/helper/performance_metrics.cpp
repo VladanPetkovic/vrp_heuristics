@@ -16,6 +16,7 @@ PerformanceMetrics::PerformanceMetrics(const ArgumentOptions &options, Graph &gr
     // calculate total_distance
     this->total_distance = solver.getTotalDistance(solver.getRoutes());
     std::cout << "Total distance " << total_distance << std::endl;
+    std::cout << "Total iterations " << number_of_iterations << std::endl;
     if (!everyNodeVisited(graph, solver)) {
         std::cout << "Not visited every node!" << std::endl;
     }
