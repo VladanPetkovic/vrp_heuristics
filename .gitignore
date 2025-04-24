@@ -3,6 +3,7 @@
 test_data
 solution
 visualization
+log
 
 # vrp_solver
 vrp_solver/.idea

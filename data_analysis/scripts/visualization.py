@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from scripts.file_helper import *
 from scripts.xml_parser import *
 
+MAX_ROUTES_TO_SHOW = 10
+
 
 def plot_nodes(nodes, vehicle_profile, output_file_path, plot_title):
     plt.figure(figsize=(8, 6))
@@ -14,7 +16,7 @@ def plot_nodes(nodes, vehicle_profile, output_file_path, plot_title):
         size = 50 if is_depot else 20
         plt.scatter(cx, cy, color='black', marker=marker, s=size)
 
-        show_label = len(nodes) < 150
+        show_label = len(nodes) < 60
         label = '' if is_depot else f"{quantity}"
         label = label if show_label else ''
         plt.text(cx + 5, cy + 5, label, fontsize=12, color='grey')
@@ -39,7 +41,7 @@ def plot_nodes_with_routes(nodes, vehicle_profile, output_file_path, solution_ro
         size = 50 if is_depot else 20
         plt.scatter(cx, cy, color='black', marker=marker, s=size)
 
-        show_label = len(nodes) < 150
+        show_label = len(nodes) < 60
         label = '' if is_depot else f"{quantity}"
         label = label if show_label else ''
         plt.text(cx + 1, cy + 1, label, fontsize=12, color='grey')
@@ -48,7 +50,7 @@ def plot_nodes_with_routes(nodes, vehicle_profile, output_file_path, solution_ro
     route_colors = ['red', 'blue', 'green', 'orange', 'black', 'grey', 'violet']
     for idx, route in enumerate(solution_routes):
         route_color = route_colors[idx % len(route_colors)]
-        if idx > 6:
+        if idx > MAX_ROUTES_TO_SHOW:
             break
         for i in range(1, len(route) - 2):
             node1 = route[i]

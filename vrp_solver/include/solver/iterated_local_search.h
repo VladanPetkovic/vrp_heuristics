@@ -5,6 +5,7 @@
 #ifndef ITERATED_LOCAL_SEARCH_H
 #define ITERATED_LOCAL_SEARCH_H
 
+#include <helper/log_helper.h>
 #include <solver/solver.h>
 #include <solver/inter_route_improvement.h>
 #include <solver/lambda_opt.h>
@@ -20,6 +21,8 @@ public:
     int getIterations() const override;
 
     const int MAX_ITERATIONS = 100000;
+
+    const double MAX_TEMPERATURE = 100;
 
     const double TEMPERATURE_FACTOR = 0.1;
 

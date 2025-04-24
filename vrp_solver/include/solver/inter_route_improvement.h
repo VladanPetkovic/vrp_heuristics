@@ -7,7 +7,6 @@
 
 #include <solver/solver.h>
 #include <models/route.h>
-#include <unordered_set>
 
 class InterRouteImprovement : public Solver {
 public:
@@ -45,8 +44,7 @@ private:
 
     bool isFeasible(const std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> &route) const;
 
-    bool hasUniqueNodes(const std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> &new_route,
-                        const std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> &new_neighbor) const;
+    // bool hasInvalidNode(std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> &route) const;
 };
 
 

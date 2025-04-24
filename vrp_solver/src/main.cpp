@@ -4,6 +4,7 @@
 #include <helper/xml_converter.h>
 #include <solver/solver.h>
 #include <helper/command_line_parser.h>
+#include <helper/log_helper.h>
 #include <helper/performance_metrics.h>
 #include <helper/solver_helper.h>
 
@@ -14,6 +15,7 @@ int main(int argc, char *argv[]) {
     // get options
     ArgumentOptions program_options;
     CommandLineParser::parseArguments(program_options, argc, argv);
+    LogHelper::init(program_options.logFilePath);
 
     // create graph
     XMLConverter::loadGraphFromData(graph, vehicle, program_options.inputFilePath);

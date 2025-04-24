@@ -47,6 +47,7 @@ struct ArgumentOptions {
     std::string inputFilePath;
     std::string outputFilePath;
     AlgorithmType algorithm; // this would be the enum
+    std::string logFilePath;
 };
 
 class CommandLineParser {

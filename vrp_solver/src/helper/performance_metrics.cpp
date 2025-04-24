@@ -26,6 +26,9 @@ PerformanceMetrics::PerformanceMetrics(const ArgumentOptions &options, Graph &gr
     if (vehicleExceedsQuantity(solver, vehicle, graph)) {
         std::cout << "Route invalid: Vehicle exceeds quantity!" << std::endl;
     }
+    if (duplicateNodesFound(solver, vehicle)) {
+        std::cout << "Route invalid: Duplicate nodes found!" << std::endl;
+    }
 }
 
 
@@ -119,5 +122,23 @@ bool PerformanceMetrics::vehicleExceedsQuantity(Solver &solver, Vehicle &vehicle
             return true;
         }
     }
+    return false;
+}
+
+bool PerformanceMetrics::duplicateNodesFound(Solver &solver, Vehicle &vehicle) const {
+    std::unordered_set<short> seen;
+    const uint16_t departure_node = vehicle.getDepartureNode().getId();
+
+    for (auto &route: solver.getRoutes()) {
+        // inserting route-nodes
+        for (const auto &node: route.getNodes()) {
+            if (node != departure_node && node != -1) {
+                if (!seen.insert(node).second) {
+                    return true; // duplicate found
+                }
+            }
+        }
+    }
+
     return false;
 }

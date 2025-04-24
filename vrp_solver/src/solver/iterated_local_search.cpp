@@ -42,7 +42,7 @@ void IteratedLocalSearch::solve() {
         } else {
             iterations_without_improvement++;
         }
-        // std::cout << best_solution_value << "\t" << new_solution_value << "\t" << _temperature << std::endl;
+        LogHelper::log(best_solution_value, new_solution_value, _temperature);
 
         // simulated annealing
         if (accept(current, new_solution_value)) {
@@ -206,5 +206,5 @@ void IteratedLocalSearch::setTemperature() {
     }
 
     avg_arc_cost = summed_distance / number_of_nodes;
-    _temperature = TEMPERATURE_FACTOR * avg_arc_cost;
+    _temperature = std::min(MAX_TEMPERATURE, TEMPERATURE_FACTOR * avg_arc_cost);
 }

@@ -4,6 +4,7 @@ dir_augerat="augerat_1995_set_a"
 dir_christofides="christofides_et_al_1979_cmt"
 dir_uchoa="uchoa_et_al_2014"
 dir_solution="solution"
+dir_log="log"
 
 performance_file_path="test_data/performance.csv"
 dir_output="$dir_solution/stats"
@@ -22,14 +23,17 @@ for dir in "$dir_augerat" "$dir_christofides"; do
     for algorithm in "${algorithms[@]}"; do
         # create subdirectory for algorithm and data set
         mkdir -p "../$dir_solution/$algorithm/$dir"
+        mkdir -p "../$dir_log/$algorithm/$dir"
 
         for file in "$dir"/*.xml; do
             echo "Running for file: $file with algorithm: $algorithm"
 
+            filename=$(basename "$file" .xml)
             output_file="../$dir_solution/$algorithm/$file"
+            log_file="../$dir_log/$algorithm/$dir/${filename}_log.txt"
             echo "Saving to: $output_file"
 
-            ../vrp_solver/out/vrp_solver -i "$file" -o "$output_file" -a "$algorithm"
+            ../vrp_solver/out/vrp_solver -i "$file" -o "$output_file" -a "$algorithm" -l "$log_file"
         done
     done
 done

@@ -102,7 +102,7 @@ void InterRouteImprovement::tryInsert(std::array<short, Route::MAX_COUNT_NODES_P
     }
 
     // removing lambda neighbor-nodes
-    for (uint8_t k = 0; k < neighbor_size; ++k) {
+    for (uint8_t k = 0; k < neighbor_size && (j + k < Route::MAX_COUNT_NODES_PER_ROUTE); ++k) {
         new_neighbor[j + k] = new_neighbor[j + k + lambda];
     }
 
@@ -129,19 +129,19 @@ void InterRouteImprovement::tryTwoOptStar(std::array<short, Route::MAX_COUNT_NOD
     auto new_neighbor = neighbor_route;
 
     // inserting neighbor-nodes after i
-    for (uint8_t k = 0; k < neighbor_size; ++k) {
+    for (uint8_t k = 0; k < neighbor_size && (std::max(i, j) + k < Route::MAX_COUNT_NODES_PER_ROUTE); ++k) {
         new_route[i + k] = neighbor_route[j + k];
     }
     // filling left spaces with -1
-    for (uint8_t k = neighbor_size; k < size; ++k) {
+    for (uint8_t k = neighbor_size; k < size && (i + k < Route::MAX_COUNT_NODES_PER_ROUTE); ++k) {
         new_route[i + k] = -1;
     }
 
     // inserting route-nodes after j
-    for (uint8_t k = 0; k < size; ++k) {
+    for (uint8_t k = 0; k < size && (std::max(i, j) + k < Route::MAX_COUNT_NODES_PER_ROUTE); ++k) {
         new_neighbor[j + k] = route[i + k];
     }
-    for (uint8_t k = size; k < neighbor_size; ++k) {
+    for (uint8_t k = size; k < neighbor_size && (j + k < Route::MAX_COUNT_NODES_PER_ROUTE); ++k) {
         new_neighbor[j + k] = -1;
     }
 
@@ -180,29 +180,11 @@ bool InterRouteImprovement::isFeasible(const std::array<short, Route::MAX_COUNT_
     return !vehicle.exceedsCapacity(total);
 }
 
-bool InterRouteImprovement::hasUniqueNodes(const std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> &new_route,
-                                           const std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> &new_neighbor)
-const {
-    std::unordered_set<short> seen;
-    const uint16_t departure_node = vehicle.getDepartureNode().getId();
-
-    // inserting route-nodes
-    for (const auto &node: new_route) {
-        if (node != departure_node && node != -1) {
-            if (!seen.insert(node).second) {
-                return false; // duplicate found
-            }
-        }
-    }
-
-    // inserting neighbor-nodes
-    for (const auto &node: new_neighbor) {
-        if (node != departure_node && node != -1) {
-            if (!seen.insert(node).second) {
-                return false; // duplicate between routes
-            }
-        }
-    }
-
-    return true;
-}
+// bool InterRouteImprovement::hasInvalidNode(std::array<short, Route::MAX_COUNT_NODES_PER_ROUTE> &route) const {
+//     for (const auto node : route) {
+//         if (node < -1) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }

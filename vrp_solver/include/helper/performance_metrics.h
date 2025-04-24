@@ -15,6 +15,7 @@
 #include <models/vehicle.h>
 #include <solver/solver.h>
 #include <models/route.h>
+#include <unordered_set>
 
 class PerformanceMetrics {
 public:
@@ -41,6 +42,8 @@ private:
     bool routeIsCorrect(Solver &solver, Vehicle &vehicle) const;
 
     bool vehicleExceedsQuantity(Solver &solver, Vehicle &vehicle, Graph &graph) const;
+
+    bool duplicateNodesFound(Solver &solver, Vehicle &vehicle) const;
 };
 
 
