@@ -39,8 +39,6 @@ public:
 
     uint16_t getTotalQuantity() const;
 
-    void setTotalQuantity(double new_total_quantity);
-
     uint8_t getSize() const;
 
     bool isEmpty() const;

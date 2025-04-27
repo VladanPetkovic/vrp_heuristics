@@ -11,6 +11,7 @@
 #include <solver/lambda_opt.h>
 #include <solver/savings_clark_wright.h>
 #include <random>
+#include <unistd.h>
 
 class IteratedLocalSearch : public Solver {
 public:
@@ -20,7 +21,7 @@ public:
 
     int getIterations() const override;
 
-    const int MAX_ITERATIONS = 100000;
+    const int MAX_ITERATIONS = 2000;
 
     const double MAX_TEMPERATURE = 100;
 

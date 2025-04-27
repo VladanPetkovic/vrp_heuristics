@@ -22,6 +22,7 @@ void IteratedLocalSearch::solve() {
     auto current = routes;
     double best_solution_value = getTotalDistance(routes);
     uint16_t iterations_without_improvement = 0;
+    uint16_t iterations_without_change = 0;
 
     for (_iterations = 0; _iterations < MAX_ITERATIONS; _iterations++) {
         // restart
@@ -31,7 +32,6 @@ void IteratedLocalSearch::solve() {
         }
         const uint8_t intensity = std::max(1, static_cast<int>(std::log10(_temperature + 1e-6))); // avoid log(0)
         shake(intensity);
-        auto shaken_solution_value = getTotalDistance(routes);
         localSearch();
 
         auto new_solution_value = getTotalDistance(routes);
@@ -39,10 +39,14 @@ void IteratedLocalSearch::solve() {
             // save the best solution
             best_solution = routes;
             best_solution_value = new_solution_value;
+            iterations_without_improvement = 0;
+            iterations_without_change = 0;
         } else {
             iterations_without_improvement++;
+            iterations_without_change++;
         }
         LogHelper::log(best_solution_value, new_solution_value, _temperature);
+        // std::cout << best_solution_value << " " << new_solution_value << " " << _temperature << std::endl;
 
         // simulated annealing
         if (accept(current, new_solution_value)) {
@@ -53,7 +57,7 @@ void IteratedLocalSearch::solve() {
         }
         _temperature *= ALPHA;
 
-        if (_temperature < MIN_TEMPERATURE) {
+        if (_temperature < MIN_TEMPERATURE && iterations_without_change > MAX_ITERATIONS_WITHOUT_IMPROVEMENT * 4) {
             break;
         }
     }
@@ -113,9 +117,6 @@ void IteratedLocalSearch::randomIntraSwap() {
  */
 void IteratedLocalSearch::randomInterMove() {
     for (auto &route: routes) {
-        route.setTotalQuantity(route.getTotalQuantity(graph));
-    }
-    for (auto &route: routes) {
         bool moved = false;
         for (uint8_t i = 0; !moved && i < routes.size(); i++) {
             Route &neighbor_route = getRoute(i);
@@ -129,7 +130,8 @@ void IteratedLocalSearch::randomInterMove() {
                 const uint8_t pos_to_insert = std::max(1, rand() % neighbor_route_size);
 
                 const auto node_to_move = graph.getNode(route.getNodeIdAt(index_to_move));
-                const uint16_t new_total_quantity = neighbor_route.getTotalQuantity() + node_to_move->getQuantity();
+                const uint16_t new_total_quantity =
+                        neighbor_route.getTotalQuantity(graph) + node_to_move->getQuantity();
 
                 if (!vehicle.exceedsCapacity(new_total_quantity)) {
                     // inter move
@@ -146,9 +148,6 @@ void IteratedLocalSearch::randomInterMove() {
 // Swap their positions if capacity is not violated
 void IteratedLocalSearch::randomCrossExchange() {
     for (auto &route: routes) {
-        route.setTotalQuantity(route.getTotalQuantity(graph));
-    }
-    for (auto &route: routes) {
         bool moved = false;
         for (uint8_t i = 0; !moved && i < routes.size(); i++) {
             Route &neighbor_route = getRoute(i);
@@ -164,9 +163,9 @@ void IteratedLocalSearch::randomCrossExchange() {
                 const auto node_to_b = graph.getNode(route.getNodeIdAt(index_from_a));
                 const auto node_to_a = graph.getNode(neighbor_route.getNodeIdAt(index_from_b));
                 const uint16_t new_total_quantity_a =
-                        route.getTotalQuantity() + node_to_a->getQuantity() - node_to_b->getQuantity();
+                        route.getTotalQuantity(graph) + node_to_a->getQuantity() - node_to_b->getQuantity();
                 const uint16_t new_total_quantity_b =
-                        neighbor_route.getTotalQuantity() + node_to_b->getQuantity() - node_to_a->getQuantity();
+                        neighbor_route.getTotalQuantity(graph) + node_to_b->getQuantity() - node_to_a->getQuantity();
 
                 if (!vehicle.exceedsCapacity(new_total_quantity_a) && !vehicle.exceedsCapacity(new_total_quantity_b)) {
                     // swap nodes

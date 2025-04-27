@@ -137,10 +137,6 @@ uint16_t Route::getTotalQuantity() const {
     return total_quantity;
 }
 
-void Route::setTotalQuantity(const double new_total_quantity) {
-    total_quantity = new_total_quantity;
-}
-
 uint8_t Route::getSize() const {
     return size;
 }
