@@ -6,7 +6,7 @@
 
 PerformanceMetrics::PerformanceMetrics(const ArgumentOptions &options, Graph &graph, Solver &solver, Vehicle &vehicle,
                                        std::chrono::duration<long, std::ratio<1, 1000000> > duration) {
-    this->duration = static_cast<int>(duration.count());
+    this->duration = static_cast<u_long>(duration.count());
     this->number_of_iterations = solver.getIterations();
     this->number_of_vehicles = solver.getRoutes().size();
     this->algorithm = options.algorithm;

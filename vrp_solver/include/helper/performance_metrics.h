@@ -29,7 +29,7 @@ public:
     void save() const;
 
 private:
-    int duration;
+    u_long duration;
     int number_of_iterations;
     int number_of_vehicles;
     double total_distance;

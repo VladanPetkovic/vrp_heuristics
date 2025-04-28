@@ -57,7 +57,7 @@ void IteratedLocalSearch::solve() {
         }
         _temperature *= ALPHA;
 
-        if (_temperature < MIN_TEMPERATURE && iterations_without_change > MAX_ITERATIONS_WITHOUT_IMPROVEMENT * 4) {
+        if (_temperature < MIN_TEMPERATURE && iterations_without_change > MAX_ITERATIONS_WITHOUT_IMPROVEMENT) {
             break;
         }
     }

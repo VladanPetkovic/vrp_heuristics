@@ -21,7 +21,7 @@ public:
 
     int getIterations() const override;
 
-    const int MAX_ITERATIONS = 2000;
+    const int MAX_ITERATIONS = 1000;
 
     const double MAX_TEMPERATURE = 100;
 

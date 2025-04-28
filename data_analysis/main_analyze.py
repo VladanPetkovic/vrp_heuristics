@@ -16,8 +16,18 @@ analyze_solution(args.input_file, args.output_dir)
 ### as a result:
 ### plots for: (and data)
 ### --> (instance, time-taken of algorithm)
-### --> (instance, routes-sum of algorithm)
+### --> (routes-sum of algorithm, distance-sum)
 ### --> (instance, distance-sum of algorithm) (with optimal solution and percentage to optimal)
-# --> (number of routes, distance-sum) --> check the relation between num_routes and distance_total
-# --> (depot-location, distance-sum of algorithm) (with optimal solution)
-# --> (customer-grouping, distance-sum of algorithm) (with optimal solution) TODO: make better
+### --> (depot-location, distance-sum of algorithm) (with optimal solution)
+### --> (customer-grouping, distance-sum of algorithm) (with optimal solution)
+
+# ------------------- TABLES
+
+### general overview
+### --> nearest neighbor, savings, improvement heuristics, ils
+### --> grouped for every test-set:
+### --> --> average duration, avg number of iterations (only ils), number of vehicles, total_distance
+### --> --> total distance relative to optimal
+
+### instances
+### --> instance_name;n;K;Q;UB;BK;entropy;depot_abs_pos;depot_rel_horiz_pos;depot_rel_vert_pos
