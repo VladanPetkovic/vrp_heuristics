@@ -19,7 +19,6 @@ algorithms=('savings_improvement' 'iterated_local_search')
 cd "test_data"
 # run solver for different test-data
 for dir in "$dir_augerat" "$dir_christofides" "$dir_uchoa"; do
-#for dir in "$dir_augerat" "$dir_christofides"; do
     for algorithm in "${algorithms[@]}"; do
         # create subdirectory for algorithm and data set
         mkdir -p "../$dir_solution/$algorithm/$dir"

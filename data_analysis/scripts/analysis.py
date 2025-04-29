@@ -129,18 +129,30 @@ def plot_relative_distance_vs_depot_orientation(df, output_dir, test_group=""):
 # y = relative distance (to optimal)
 def plot_routes_count_distance_relation(df, output_dir, test_group=""):
     df["relative_distance"] = df["total_distance"] / df["UB"]
-    avg_df = df.groupby(["number_of_vehicles", "algorithm"], as_index=False)["relative_distance"].mean()
+    per_algo_avg = df.groupby(["number_of_vehicles", "algorithm"], as_index=False)["relative_distance"].mean()
+    overall_avg = df.groupby("number_of_vehicles", as_index=False)["relative_distance"].mean()
 
     plt.figure(figsize=(14, 6))
-    sns.lineplot(data=avg_df, x="number_of_vehicles", y="relative_distance", hue="algorithm", marker="o")
-    plt.axhline(1.0, color="black", linestyle="--", linewidth=2.5, label="Optimal (UB)")
+    sns.lineplot(data=per_algo_avg, x="number_of_vehicles", y="relative_distance", hue="algorithm", marker="o")
 
+    plt.plot(
+        overall_avg["number_of_vehicles"],
+        overall_avg["relative_distance"],
+        label="Average",
+        color="lightgrey",
+        linestyle="--",
+        linewidth=2,
+        marker="o"
+    )
+
+    plt.axhline(1.0, color="black", linestyle="--", linewidth=2.5, label="Optimal (UB)")
     plt.title(f"Relative distance for number of routes - {test_group.capitalize()} instances")
     plt.xlabel("Number of routes")
     plt.ylabel("Relative distance (taken/optimal)")
-    plt.tight_layout()
     plt.grid(True)
+    plt.tight_layout()
     plt.legend()
+
     file_name = f"relative_distance_to_route_count_{test_group}.png"
     plt.savefig(os.path.join(output_dir, file_name))
     plt.close()
@@ -151,18 +163,31 @@ def plot_routes_count_distance_relation(df, output_dir, test_group=""):
 def plot_route_length_distance_relation(df, output_dir, test_group=""):
     df["relative_distance"] = df["total_distance"] / df["UB"]
     df["avg_route_length"] = (df["n"] - 1) / df["number_of_vehicles"]
-    avg_df = df.groupby(["avg_route_length", "algorithm"], as_index=False)["relative_distance"].mean()
+
+    per_algo_avg = df.groupby(["avg_route_length", "algorithm"], as_index=False)["relative_distance"].mean()
+    overall_avg = df.groupby("avg_route_length", as_index=False)["relative_distance"].mean()
 
     plt.figure(figsize=(14, 6))
-    sns.lineplot(data=avg_df, x="avg_route_length", y="relative_distance", hue="algorithm", marker="o")
-    plt.axhline(1.0, color="black", linestyle="--", linewidth=2.5, label="Optimal (UB)")
+    sns.lineplot(data=per_algo_avg, x="avg_route_length", y="relative_distance", hue="algorithm", marker="o")
 
+    plt.plot(
+        overall_avg["avg_route_length"],
+        overall_avg["relative_distance"],
+        label="Average",
+        color="lightgrey",
+        linestyle="--",
+        linewidth=2,
+        marker="o"
+    )
+
+    plt.axhline(1.0, color="black", linestyle="--", linewidth=2.5, label="Optimal (UB)")
     plt.title(f"Relative distance for average number of customers per route - {test_group.capitalize()} instances")
     plt.xlabel("Number of customers per route")
     plt.ylabel("Relative distance (taken/optimal)")
-    plt.tight_layout()
     plt.grid(True)
+    plt.tight_layout()
     plt.legend()
+
     file_name = f"relative_distance_to_route_length_{test_group}.png"
     plt.savefig(os.path.join(output_dir, file_name))
     plt.close()
@@ -190,19 +215,32 @@ def plot_rel_distance(df, output_dir, test_group=""):
 
 def plot_rel_distance_vs_entropy(df, output_dir, test_group=""):
     df["relative_distance"] = df["total_distance"] / df["UB"]
-
     df = df.sort_values("entropy")
 
-    plt.figure(figsize=(14, 6))
-    sns.lineplot(data=df, x="entropy", y="relative_distance", hue="algorithm", marker="o")
-    plt.axhline(1.0, color="black", linestyle="--", linewidth=2.5, label="Optimal (UB)")
+    per_algo_avg = df.groupby(["entropy", "algorithm"], as_index=False)["relative_distance"].mean()
+    overall_avg = df.groupby("entropy", as_index=False)["relative_distance"].mean()
 
+    plt.figure(figsize=(14, 6))
+    sns.lineplot(data=per_algo_avg, x="entropy", y="relative_distance", hue="algorithm", marker="o")
+
+    plt.plot(
+        overall_avg["entropy"],
+        overall_avg["relative_distance"],
+        label="Average",
+        color="lightgrey",
+        linestyle="--",
+        linewidth=2,
+        marker="o"
+    )
+
+    plt.axhline(1.0, color="black", linestyle="--", linewidth=2.5, label="Optimal (UB)")
     plt.title(f"Relative distance vs entropy - {test_group.capitalize()} instances")
     plt.xlabel("Entropy (binned)")
     plt.ylabel("Relative Distance (total_distance / UB)")
     plt.grid(True)
     plt.tight_layout()
     plt.legend(title="Algorithm")
+
     file_name = f"relative_distance_vs_entropy_{test_group}.png"
     plt.savefig(os.path.join(output_dir, file_name))
     plt.close()

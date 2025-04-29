@@ -19,7 +19,9 @@ column_mapping_solution = {
     "number_of_iterations": "Avg iteration-count",
     "number_of_vehicles": "Avg vehicle-count",
     "total_distance": "Avg total distance",
-    "relative_distance": "Avg relative distance"
+    "relative_distance": "Avg relative distance",
+    "best_relative_distance": "Best relative distance",
+    "worst_relative_distance": "Worst relative distance"
 }
 
 algorithm_mapping = {
@@ -55,15 +57,20 @@ def generate_latex_table_for_solution_overview(group_df):
         "number_of_iterations": "mean",
         "number_of_vehicles": "mean",
         "total_distance": "mean",
-        "relative_distance": "mean"
+        "relative_distance": ["mean", "min", "max"]
     }).reset_index()
+
+    summary.columns = ['algorithm', 'duration_μs', 'number_of_iterations', 'number_of_vehicles',
+                       'total_distance', 'relative_distance', 'best_relative_distance', 'worst_relative_distance']
 
     summary = summary.round({
         "duration_μs": 4,
         "number_of_iterations": 4,
         "number_of_vehicles": 4,
         "total_distance": 4,
-        "relative_distance": 4
+        "relative_distance": 4,
+        "best_relative_distance": 4,
+        "worst_relative_distance": 4
     })
 
     summary = summary.rename(columns=column_mapping_solution)
