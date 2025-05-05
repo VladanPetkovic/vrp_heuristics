@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from scripts.file_helper import *
 from scripts.xml_parser import *
 
-MAX_ROUTES_TO_SHOW = 10
+MAX_ROUTES_TO_SHOW = 30
 
 
 def plot_nodes(nodes, vehicle_profile, output_file_path, plot_title):
@@ -19,7 +19,7 @@ def plot_nodes(nodes, vehicle_profile, output_file_path, plot_title):
         show_label = len(nodes) < 60
         label = '' if is_depot else f"{quantity}"
         label = label if show_label else ''
-        plt.text(cx + 5, cy + 5, label, fontsize=12, color='grey')
+        plt.text(cx + 1, cy + 1, label, fontsize=12, color='grey')
 
     plt.xlabel('X Coordinate')
     plt.ylabel('Y Coordinate')

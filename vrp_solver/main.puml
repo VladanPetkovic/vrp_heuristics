@@ -1,0 +1,48 @@
+@startuml
+
+' skinparam classAttributeIconSize 0
+
+' === Data Models ===
+class Graph {
+
+    -nodes : map
+    -distanceMatrix : map
+}
+
+class Node {
+    -x_position : uint16_t
+    -y_position : uint16_t
+    -quantity : uint8_t
+    -id : uint16_t
+    -type : uint8_t
+}
+
+class Vehicle {
+    -capacity : uint16_t
+    -departureNode : Node
+    -arrivalNode : Node
+}
+
+class Route {
+    -nodes : array<short>
+    -size : uint8_t
+    -total_quantity : double
+}
+
+
+' === Solver Core ===
+abstract class Solver {
+    +solve() : void
+    +getTotalDistance(list<Route>) : double
+    -graph : Graph
+    -vehicle : Vehicle
+    -routes : list<Route>
+}
+
+' === Associations ===
+Solver "1" --> "1" Graph : "operates on"
+Solver "1" --> "*" Route : "constructs"
+Solver "1" --> "1" Vehicle : "has"
+Graph "1" --> "*" Node : "has"
+
+@enduml

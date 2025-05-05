@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+actor User
+
+participant Main
+participant CommandLineParser
+participant XMLConverter
+participant Solver
+participant Performance
+
+User -> Main : ./vrp_solver
+
+Main -> CommandLineParser : parseArguments()
+note right of CommandLineParser
+    Parses:
+    - -i <input_file_path>
+    - -o <output_file_path>
+    - -a <algorithm_name>
+    - -l <log_file_path>
+end note
+
+Main -> XMLConverter : loadGraphFromData(graph, vehicle, input_file_path)
+
+Main -> Solver : Solver(graph, vehicle, routes, algorithm_name)
+Main -> Solver : solve()
+
+Main -> XMLConverter : saveSolutionToFile(solver->getRoutes(), graph, output_file_path)
+
+alt properlySaved && isValid
+    Main -> Performance: save()
+end
+
+User <- Main : EXIT_SUCCESS or EXIT_FAILURE
+@enduml

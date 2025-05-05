@@ -9,7 +9,7 @@ dir_solution="solution"
 ##########################
 # algorithms
 #algorithms=('nearest_neighbor' 'savings_clark_wright' 'nn_lambda_opt' 'savings_lambda_opt' 'nn_improvement' 'savings_improvement' 'iterated_local_search')
-algorithms=('iterated_local_search')
+algorithms=('nn_improvement')
 
 ##########################
 
